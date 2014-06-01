@@ -1,0 +1,13 @@
+C:\Git\EverImage\EverImage\bin\Debug\EverImage.exe.config
+C:\Git\EverImage\EverImage\bin\Debug\EverImage.exe
+C:\Git\EverImage\EverImage\bin\Debug\EverImage.pdb
+C:\Git\EverImage\EverImage\obj\Debug\EverImage.csprojResolveAssemblyReference.cache
+C:\Git\EverImage\EverImage\obj\Debug\EverImage.FormMain.resources
+C:\Git\EverImage\EverImage\obj\Debug\EverImage.Properties.Resources.resources
+C:\Git\EverImage\EverImage\obj\Debug\EverImage.csproj.GenerateResource.Cache
+C:\Git\EverImage\EverImage\obj\Debug\EverImage.exe
+C:\Git\EverImage\EverImage\obj\Debug\EverImage.pdb
+C:\Git\EverImage\EverImage\bin\Debug\Evernote.dll
+C:\Git\EverImage\EverImage\bin\Debug\Thrift.dll
+C:\Git\EverImage\EverImage\bin\Debug\Thrift.pdb
+C:\Git\EverImage\EverImage\bin\Debug\EvernoteOAuth.dll
