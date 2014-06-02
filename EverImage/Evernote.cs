@@ -22,6 +22,19 @@ namespace EverImage
     /// </summary>
     class Evernote
     {
+        static public string GetEvernoteUserName(string EvernoteToken)
+        {
+            string authToken = EvernoteToken;
+            String evernoteHost = "sandbox.evernote.com";
+
+            Uri userStoreUrl = new Uri("https://" + evernoteHost + "/edam/user");
+            TTransport userStoreTransport = new THttpClient(userStoreUrl);
+            TProtocol userStoreProtocol = new TBinaryProtocol(userStoreTransport);
+            UserStore.Client userStore = new UserStore.Client(userStoreProtocol);
+
+            return userStore.getUser(authToken).Name;
+        }
+
         /// <summary>
         /// Evernoteに画像を送信する
         /// </summary>
@@ -36,7 +49,6 @@ namespace EverImage
             TTransport userStoreTransport = new THttpClient(userStoreUrl);
             TProtocol userStoreProtocol = new TBinaryProtocol(userStoreTransport);
             UserStore.Client userStore = new UserStore.Client(userStoreProtocol);
-
             String noteStoreUrl = userStore.getNoteStoreUrl(authToken);
 
             TTransport noteStoreTransport = new THttpClient(new Uri(noteStoreUrl));

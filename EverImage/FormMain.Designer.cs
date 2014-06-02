@@ -43,6 +43,9 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.listView = new System.Windows.Forms.ListView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
+            this.statusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.logoutOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.gbTop.SuspendLayout();
             this.gbImages.SuspendLayout();
@@ -70,22 +73,25 @@
             // settingSToolStripMenuItem
             // 
             this.settingSToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loginLToolStripMenuItem});
+            this.loginLToolStripMenuItem,
+            this.statusToolStripMenuItem,
+            this.logoutOToolStripMenuItem});
             this.settingSToolStripMenuItem.Name = "settingSToolStripMenuItem";
             this.settingSToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.settingSToolStripMenuItem.Text = "Evernote(&S)";
+            this.settingSToolStripMenuItem.MouseEnter += new System.EventHandler(this.settingSToolStripMenuItem_MouseEnter);
             // 
             // loginLToolStripMenuItem
             // 
             this.loginLToolStripMenuItem.Name = "loginLToolStripMenuItem";
-            this.loginLToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.loginLToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loginLToolStripMenuItem.Text = "Login(&L)";
             this.loginLToolStripMenuItem.Click += new System.EventHandler(this.loginLToolStripMenuItem_Click);
             // 
             // closeCToolStripMenuItem
             // 
             this.closeCToolStripMenuItem.Name = "closeCToolStripMenuItem";
-            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.closeCToolStripMenuItem.Text = "Close(&C)";
             this.closeCToolStripMenuItem.Click += new System.EventHandler(this.closeCToolStripMenuItem_Click);
             // 
@@ -100,6 +106,8 @@
             // 
             // gbTop
             // 
+            this.gbTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbTop.Controls.Add(this.btnGetImages);
             this.gbTop.Controls.Add(this.tbUrl);
             this.gbTop.Controls.Add(this.lblUrl);
@@ -111,6 +119,7 @@
             // 
             // btnGetImages
             // 
+            this.btnGetImages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnGetImages.Location = new System.Drawing.Point(198, 37);
             this.btnGetImages.Name = "btnGetImages";
             this.btnGetImages.Size = new System.Drawing.Size(156, 23);
@@ -121,6 +130,8 @@
             // 
             // tbUrl
             // 
+            this.tbUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbUrl.Location = new System.Drawing.Point(39, 12);
             this.tbUrl.Name = "tbUrl";
             this.tbUrl.Size = new System.Drawing.Size(315, 19);
@@ -128,6 +139,9 @@
             // 
             // gbImages
             // 
+            this.gbImages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbImages.Controls.Add(this.btnEvernote);
             this.gbImages.Controls.Add(this.lblStatus);
             this.gbImages.Controls.Add(this.listView);
@@ -139,6 +153,7 @@
             // 
             // btnEvernote
             // 
+            this.btnEvernote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEvernote.Location = new System.Drawing.Point(263, 317);
             this.btnEvernote.Name = "btnEvernote";
             this.btnEvernote.Size = new System.Drawing.Size(91, 23);
@@ -149,6 +164,7 @@
             // 
             // lblStatus
             // 
+            this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblStatus.AutoSize = true;
             this.lblStatus.Location = new System.Drawing.Point(16, 322);
             this.lblStatus.Name = "lblStatus";
@@ -158,11 +174,14 @@
             // 
             // listView
             // 
+            this.listView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listView.CheckBoxes = true;
             this.listView.Location = new System.Drawing.Point(18, 18);
             this.listView.Name = "listView";
             this.listView.Size = new System.Drawing.Size(336, 293);
-            this.listView.TabIndex = 5;
+            this.listView.TabIndex = 1;
             this.listView.UseCompatibleStateImageBehavior = false;
             // 
             // imageList
@@ -170,6 +189,26 @@
             this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.imageList.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // statusToolStripMenuItem
+            // 
+            this.statusToolStripMenuItem.Name = "statusToolStripMenuItem";
+            this.statusToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.statusToolStripMenuItem.Text = "Status";
+            // 
+            // backgroundWorker
+            // 
+            this.backgroundWorker.WorkerReportsProgress = true;
+            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
+            this.backgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_ProgressChanged);
+            this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
+            // 
+            // logoutOToolStripMenuItem
+            // 
+            this.logoutOToolStripMenuItem.Name = "logoutOToolStripMenuItem";
+            this.logoutOToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.logoutOToolStripMenuItem.Text = "Logout(&O)";
+            this.logoutOToolStripMenuItem.Click += new System.EventHandler(this.logoutOToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -181,7 +220,7 @@
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
             this.Name = "FormMain";
-            this.Text = "EvetImage";
+            this.Text = "EverImage";
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.gbTop.ResumeLayout(false);
@@ -209,6 +248,9 @@
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.ListView listView;
         private System.Windows.Forms.ImageList imageList;
+        private System.Windows.Forms.ToolStripMenuItem statusToolStripMenuItem;
+        private System.ComponentModel.BackgroundWorker backgroundWorker;
+        private System.Windows.Forms.ToolStripMenuItem logoutOToolStripMenuItem;
     }
 }
 
