@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Security.Cryptography;
-using System.IO;
-using Thrift;
 using Thrift.Protocol;
 using Thrift.Transport;
-using Evernote;
 using Evernote.EDAM.Type;
 using Evernote.EDAM.UserStore;
 using Evernote.EDAM.NoteStore;
-using Evernote.EDAM.Error;
 using System.Drawing;
 
 namespace EverImage

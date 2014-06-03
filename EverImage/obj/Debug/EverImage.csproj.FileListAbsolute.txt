@@ -11,3 +11,4 @@ C:\Git\EverImage\EverImage\bin\Debug\Evernote.dll
 C:\Git\EverImage\EverImage\bin\Debug\Thrift.dll
 C:\Git\EverImage\EverImage\bin\Debug\Thrift.pdb
 C:\Git\EverImage\EverImage\bin\Debug\EvernoteOAuth.dll
+C:\Git\EverImage\EverImage\bin\Debug\EvernoteOAuth.pdb

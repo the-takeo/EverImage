@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.IO;
@@ -146,10 +143,11 @@ namespace EverImage
         {
             lblStatus.Text = "Evernoteに画像を送信中です。";
             beginProgress();
+            pbSendingEvernote.Enabled = true;
 
             foreach (ListViewItem item in listView.CheckedItems)
             {
-                SendImagesIndex.Add(item.Index, item.Name);
+                SendImagesIndex.Add(item.Index, item.Text);
             }
 
             backgroundWorker.RunWorkerAsync();
@@ -180,6 +178,8 @@ namespace EverImage
             lblStatus.Text
                 = listView.CheckedItems.Count.ToString() + "画像中"
                 + e.ProgressPercentage.ToString() + "画像の送信が完了しました。";
+
+            pbSendingEvernote.Value = 100 * e.ProgressPercentage / SendImagesIndex.Count;
         }
 
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -203,6 +203,10 @@ namespace EverImage
                 ErrorImageUrls.Clear();
             }
 
+            SendImagesIndex.Clear();
+
+            pbSendingEvernote.Value = 0;
+            pbSendingEvernote.Enabled = false;
             endProgress();
         }
     }

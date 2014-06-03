@@ -1,0 +1,7 @@
+C:\Git\EverImage\EvernoteOAuth\bin\Debug\EvernoteOAuth.dll
+C:\Git\EverImage\EvernoteOAuth\bin\Debug\EvernoteOAuth.pdb
+C:\Git\EverImage\EvernoteOAuth\obj\Debug\EvernoteOAuth.csprojResolveAssemblyReference.cache
+C:\Git\EverImage\EvernoteOAuth\obj\Debug\EvernoteOAuth.dll
+C:\Git\EverImage\EvernoteOAuth\obj\Debug\EvernoteOAuth.pdb
+C:\Git\EverImage\EvernoteOAuth\obj\Debug\EvernoteOAuth.WebDialog.resources
+C:\Git\EverImage\EvernoteOAuth\obj\Debug\EvernoteOAuth.csproj.GenerateResource.Cache

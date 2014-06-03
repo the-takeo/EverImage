@@ -33,6 +33,8 @@
             this.fileFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loginLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logoutOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblUrl = new System.Windows.Forms.Label();
             this.gbTop = new System.Windows.Forms.GroupBox();
@@ -43,9 +45,8 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.listView = new System.Windows.Forms.ListView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
-            this.statusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
-            this.logoutOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pbSendingEvernote = new System.Windows.Forms.ProgressBar();
             this.menuStrip.SuspendLayout();
             this.gbTop.SuspendLayout();
             this.gbImages.SuspendLayout();
@@ -77,21 +78,34 @@
             this.statusToolStripMenuItem,
             this.logoutOToolStripMenuItem});
             this.settingSToolStripMenuItem.Name = "settingSToolStripMenuItem";
-            this.settingSToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingSToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.settingSToolStripMenuItem.Text = "Evernote(&S)";
             this.settingSToolStripMenuItem.MouseEnter += new System.EventHandler(this.settingSToolStripMenuItem_MouseEnter);
             // 
             // loginLToolStripMenuItem
             // 
             this.loginLToolStripMenuItem.Name = "loginLToolStripMenuItem";
-            this.loginLToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loginLToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.loginLToolStripMenuItem.Text = "Login(&L)";
             this.loginLToolStripMenuItem.Click += new System.EventHandler(this.loginLToolStripMenuItem_Click);
+            // 
+            // statusToolStripMenuItem
+            // 
+            this.statusToolStripMenuItem.Name = "statusToolStripMenuItem";
+            this.statusToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.statusToolStripMenuItem.Text = "Status";
+            // 
+            // logoutOToolStripMenuItem
+            // 
+            this.logoutOToolStripMenuItem.Name = "logoutOToolStripMenuItem";
+            this.logoutOToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.logoutOToolStripMenuItem.Text = "Logout(&O)";
+            this.logoutOToolStripMenuItem.Click += new System.EventHandler(this.logoutOToolStripMenuItem_Click);
             // 
             // closeCToolStripMenuItem
             // 
             this.closeCToolStripMenuItem.Name = "closeCToolStripMenuItem";
-            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.closeCToolStripMenuItem.Text = "Close(&C)";
             this.closeCToolStripMenuItem.Click += new System.EventHandler(this.closeCToolStripMenuItem_Click);
             // 
@@ -142,19 +156,20 @@
             this.gbImages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbImages.Controls.Add(this.pbSendingEvernote);
             this.gbImages.Controls.Add(this.btnEvernote);
             this.gbImages.Controls.Add(this.lblStatus);
             this.gbImages.Controls.Add(this.listView);
             this.gbImages.Location = new System.Drawing.Point(12, 103);
             this.gbImages.Name = "gbImages";
-            this.gbImages.Size = new System.Drawing.Size(360, 346);
+            this.gbImages.Size = new System.Drawing.Size(360, 366);
             this.gbImages.TabIndex = 4;
             this.gbImages.TabStop = false;
             // 
             // btnEvernote
             // 
             this.btnEvernote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEvernote.Location = new System.Drawing.Point(263, 317);
+            this.btnEvernote.Location = new System.Drawing.Point(263, 337);
             this.btnEvernote.Name = "btnEvernote";
             this.btnEvernote.Size = new System.Drawing.Size(91, 23);
             this.btnEvernote.TabIndex = 7;
@@ -180,7 +195,7 @@
             this.listView.CheckBoxes = true;
             this.listView.Location = new System.Drawing.Point(18, 18);
             this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(336, 293);
+            this.listView.Size = new System.Drawing.Size(336, 301);
             this.listView.TabIndex = 1;
             this.listView.UseCompatibleStateImageBehavior = false;
             // 
@@ -190,12 +205,6 @@
             this.imageList.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // statusToolStripMenuItem
-            // 
-            this.statusToolStripMenuItem.Name = "statusToolStripMenuItem";
-            this.statusToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.statusToolStripMenuItem.Text = "Status";
-            // 
             // backgroundWorker
             // 
             this.backgroundWorker.WorkerReportsProgress = true;
@@ -203,18 +212,18 @@
             this.backgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_ProgressChanged);
             this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
             // 
-            // logoutOToolStripMenuItem
+            // pbSendingEvernote
             // 
-            this.logoutOToolStripMenuItem.Name = "logoutOToolStripMenuItem";
-            this.logoutOToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.logoutOToolStripMenuItem.Text = "Logout(&O)";
-            this.logoutOToolStripMenuItem.Click += new System.EventHandler(this.logoutOToolStripMenuItem_Click);
+            this.pbSendingEvernote.Location = new System.Drawing.Point(18, 337);
+            this.pbSendingEvernote.Name = "pbSendingEvernote";
+            this.pbSendingEvernote.Size = new System.Drawing.Size(239, 23);
+            this.pbSendingEvernote.TabIndex = 8;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 461);
+            this.ClientSize = new System.Drawing.Size(384, 481);
             this.Controls.Add(this.gbImages);
             this.Controls.Add(this.gbTop);
             this.Controls.Add(this.menuStrip);
@@ -251,6 +260,7 @@
         private System.Windows.Forms.ToolStripMenuItem statusToolStripMenuItem;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
         private System.Windows.Forms.ToolStripMenuItem logoutOToolStripMenuItem;
+        private System.Windows.Forms.ProgressBar pbSendingEvernote;
     }
 }
 
