@@ -25,7 +25,7 @@ namespace EverImage
             TProtocol userStoreProtocol = new TBinaryProtocol(userStoreTransport);
             UserStore.Client userStore = new UserStore.Client(userStoreProtocol);
 
-            return userStore.getUser(authToken).Name;
+            return userStore.getUser(authToken).Username;
         }
 
         /// <summary>

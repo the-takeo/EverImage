@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsumerKeys.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>

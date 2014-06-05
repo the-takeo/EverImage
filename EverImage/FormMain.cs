@@ -19,9 +19,12 @@ namespace EverImage
 
         List<string> ErrorImageUrls = new List<string>();
 
-        string EvernoteToken = string.Empty; //本来はappConfigから取得する
-        string consumerKey = string.Empty; //本来はここで記述
-        string consumerSecret = string.Empty; //本来はここで記述
+        string EvernoteToken = EverImage.Properties.Settings.Default.EvernoteToken;
+        string consumerKey = ConsumerKeys.consumerKey; //公開不可
+        string consumerSecret = ConsumerKeys.consumerSecret; //公開不可
+
+        const int listWidth = 100;
+        const int listHeight = 80;
 
         /// <summary>
         /// コンストラクタ
@@ -30,6 +33,7 @@ namespace EverImage
         {
             InitializeComponent();
 
+            imageList.ImageSize = new Size(listWidth, listHeight);
             listView.LargeImageList = imageList;
             EvernoteToken = EverImage.Properties.Settings.Default.EvernoteToken;
             statusToolStripMenuItem.Enabled = false;
@@ -113,7 +117,9 @@ namespace EverImage
                 Image image = Image.FromStream(stream);
                 Images.Add(image);
 
-                imageList.Images.Add(image);
+                Image thumbnail = createThumbnail(image, listWidth, listHeight);
+
+                imageList.Images.Add(thumbnail);
                 listView.Items.Add(Path.GetFileName(Adresses[i]), i);
                 listView.Items[i].Checked = true;
                 stream.Close();
@@ -208,6 +214,26 @@ namespace EverImage
             pbSendingEvernote.Value = 0;
             pbSendingEvernote.Enabled = false;
             endProgress();
+        }
+
+        Image createThumbnail(Image image, int width, int height)
+        {
+            Bitmap canvas = new Bitmap(width, height);
+
+            Graphics g = Graphics.FromImage(canvas);
+            g.FillRectangle(new SolidBrush(Color.White), 0, 0, width, height);
+
+            float fw = (float)width / (float)image.Width;
+            float fh = (float)height / (float)image.Height;
+
+            float scale = Math.Min(fw, fh);
+            fw = image.Width * scale;
+            fh = image.Height * scale;
+
+            g.DrawImage(image, (width - fw) / 2, (height - fh) / 2, fw, fh);
+            g.Dispose();
+
+            return canvas;
         }
     }
 }
