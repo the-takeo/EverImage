@@ -117,13 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="menuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="imageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>131, 17</value>
-  </metadata>
-  <metadata name="bgSendToEvernote.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>240, 17</value>
-  </metadata>
+  <data name="CompletedGettingImages" xml:space="preserve">
+    <value>画像の取得が完了しました。</value>
+  </data>
+  <data name="CompletedSending" xml:space="preserve">
+    <value>送信が完了しました。</value>
+  </data>
+  <data name="FailedGettingEvernoteUserName" xml:space="preserve">
+    <value>Evernoteの情報取得に失敗しました。接続状況を確認して下さい。接続に問題がない場合、再ログインをしてください。</value>
+  </data>
+  <data name="GettingImagesFromWeb" xml:space="preserve">
+    <value>Webページから画像を取得中です。</value>
+  </data>
+  <data name="LoginToEvernote" xml:space="preserve">
+    <value>{0}としてEvernoteにログインしています。</value>
+  </data>
+  <data name="LogoutFromEvernote" xml:space="preserve">
+    <value>Evernoteにログインしていません。</value>
+  </data>
+  <data name="ProgressOfSending" xml:space="preserve">
+    <value>{0}画像中、{1}画像の送信が完了しました。</value>
+  </data>
+  <data name="SendingError" xml:space="preserve">
+    <value>{0}の送信に失敗しました。</value>
+  </data>
+  <data name="SendingToEvernote" xml:space="preserve">
+    <value>Evernoteに画像を送信中です。</value>
+  </data>
 </root>

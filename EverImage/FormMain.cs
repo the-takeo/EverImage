@@ -38,7 +38,7 @@ namespace EverImage
             EvernoteToken = EverImage.Properties.Settings.Default.EvernoteToken;
             statusToolStripMenuItem.Enabled = false;
 
-            this.MinimumSize = new System.Drawing.Size(400, 500);
+            this.MinimumSize = new System.Drawing.Size(400, 520);
 
             endProgress();
         }
@@ -71,6 +71,7 @@ namespace EverImage
             if (oauth.doAuth(consumerKey, consumerSecret))
             {
                 EverImage.Properties.Settings.Default.EvernoteToken = oauth.OAuthToken;
+                EverImage.Properties.Settings.Default.Save();
                 EvernoteToken = oauth.OAuthToken;
             }
         }
@@ -84,20 +85,29 @@ namespace EverImage
         {
             EvernoteToken = string.Empty;
             EverImage.Properties.Settings.Default.EvernoteToken = string.Empty;
+            EverImage.Properties.Settings.Default.Save();
         }
 
         private void settingSToolStripMenuItem_MouseEnter(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(EvernoteToken) == false)
             {
-                statusToolStripMenuItem.Text
-                    = Evernote.GetEvernoteUserName(EvernoteToken) + "としてEvernoteにログインしています。";
+                try
+                {
+                    statusToolStripMenuItem.Text
+                       = string.Format(ResEverImage.LoginToEvernote, Evernote.GetEvernoteUserName(EvernoteToken));
+                }
+                catch
+                {
+                    statusToolStripMenuItem.Text = ResEverImage.FailedGettingEvernoteUserName;
+                }
                 loginLToolStripMenuItem.Enabled = false;
                 logoutOToolStripMenuItem.Enabled = true;
+                
             }
             else
             {
-                statusToolStripMenuItem.Text = "Evernoteにログインしていません。";
+                statusToolStripMenuItem.Text = ResEverImage.LogoutFromEvernote;
                 loginLToolStripMenuItem.Enabled = true;
                 logoutOToolStripMenuItem.Enabled = false;
             }
@@ -129,7 +139,7 @@ namespace EverImage
         private void btnGetImages_Click(object sender, EventArgs e)
         {
             beginProgress();
-            lblStatus.Text = "Webページから画像を取得中です。";
+            lblStatus.Text = ResEverImage.GettingImagesFromWeb;
 
             listView.Clear();
             imageList.Images.Clear();
@@ -141,13 +151,13 @@ namespace EverImage
 
             listView.Enabled = true;
 
-            lblStatus.Text = "画像の取得が完了しました。";
+            lblStatus.Text = ResEverImage.CompletedGettingImages;
             endProgress();
         }
 
         private void btnEvernote_Click(object sender, EventArgs e)
         {
-            lblStatus.Text = "Evernoteに画像を送信中です。";
+            lblStatus.Text = ResEverImage.SendingToEvernote;
             beginProgress();
             pbSendingEvernote.Enabled = true;
 
@@ -156,10 +166,10 @@ namespace EverImage
                 SendImagesIndex.Add(item.Index, item.Text);
             }
 
-            backgroundWorker.RunWorkerAsync();
+            bgSendToEvernote.RunWorkerAsync();
         }
 
-        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void bgSendToEvernote_DoWork(object sender, DoWorkEventArgs e)
         {
             int count = 1;
 
@@ -174,23 +184,24 @@ namespace EverImage
                     ErrorImageUrls.Add(SendImagesIndex[index]);
                 }
 
-                backgroundWorker.ReportProgress(count);
+                bgSendToEvernote.ReportProgress(count);
                 count++;
             }
         }
 
-        private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void bgSendToEvernote_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             lblStatus.Text
-                = listView.CheckedItems.Count.ToString() + "画像中"
-                + e.ProgressPercentage.ToString() + "画像の送信が完了しました。";
+                = string.Format(ResEverImage.ProgressOfSending,
+                listView.CheckedItems.Count.ToString(),
+                e.ProgressPercentage.ToString());
 
             pbSendingEvernote.Value = 100 * e.ProgressPercentage / SendImagesIndex.Count;
         }
 
-        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void bgSendToEvernote_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            lblStatus.Text = "送信が完了しました。";
+            lblStatus.Text = ResEverImage.CompletedSending;
 
             if (ErrorImageUrls.Count != 0)
             {
@@ -202,9 +213,8 @@ namespace EverImage
                     sb.Append(",");
                 }
                 sb.Remove(sb.Length - 1, 1);
-                sb.Append("の送信に失敗しました。");
 
-                MessageBox.Show(sb.ToString());
+                MessageBox.Show(string.Format(ResEverImage.SendingError, sb.ToString()));
 
                 ErrorImageUrls.Clear();
             }
@@ -216,12 +226,19 @@ namespace EverImage
             endProgress();
         }
 
-        Image createThumbnail(Image image, int width, int height)
+        /// <summary>
+        /// イメージのサムネイルを作成する
+        /// </summary>
+        /// <param name="image">イメージ</param>
+        /// <param name="width">幅</param>
+        /// <param name="height">高さ</param>
+        /// <returns>サムネイルイメージ</returns>
+        private Image createThumbnail(Image image, int width, int height)
         {
-            Bitmap canvas = new Bitmap(width, height);
+            Bitmap thumbnail = new Bitmap(width, height);
 
-            Graphics g = Graphics.FromImage(canvas);
-            g.FillRectangle(new SolidBrush(Color.White), 0, 0, width, height);
+            Graphics graphics = Graphics.FromImage(thumbnail);
+            graphics.FillRectangle(new SolidBrush(Color.White), 0, 0, width, height);
 
             float fw = (float)width / (float)image.Width;
             float fh = (float)height / (float)image.Height;
@@ -230,10 +247,10 @@ namespace EverImage
             fw = image.Width * scale;
             fh = image.Height * scale;
 
-            g.DrawImage(image, (width - fw) / 2, (height - fh) / 2, fw, fh);
-            g.Dispose();
+            graphics.DrawImage(image, (width - fw) / 2, (height - fh) / 2, fw, fh);
+            graphics.Dispose();
 
-            return canvas;
+            return thumbnail;
         }
     }
 }

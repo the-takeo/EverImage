@@ -41,12 +41,12 @@
             this.btnGetImages = new System.Windows.Forms.Button();
             this.tbUrl = new System.Windows.Forms.TextBox();
             this.gbImages = new System.Windows.Forms.GroupBox();
+            this.pbSendingEvernote = new System.Windows.Forms.ProgressBar();
             this.btnEvernote = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
             this.listView = new System.Windows.Forms.ListView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
-            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
-            this.pbSendingEvernote = new System.Windows.Forms.ProgressBar();
+            this.bgSendToEvernote = new System.ComponentModel.BackgroundWorker();
             this.menuStrip.SuspendLayout();
             this.gbTop.SuspendLayout();
             this.gbImages.SuspendLayout();
@@ -166,6 +166,14 @@
             this.gbImages.TabIndex = 4;
             this.gbImages.TabStop = false;
             // 
+            // pbSendingEvernote
+            // 
+            this.pbSendingEvernote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pbSendingEvernote.Location = new System.Drawing.Point(18, 337);
+            this.pbSendingEvernote.Name = "pbSendingEvernote";
+            this.pbSendingEvernote.Size = new System.Drawing.Size(239, 23);
+            this.pbSendingEvernote.TabIndex = 8;
+            // 
             // btnEvernote
             // 
             this.btnEvernote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -205,19 +213,12 @@
             this.imageList.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // backgroundWorker
+            // bgSendToEvernote
             // 
-            this.backgroundWorker.WorkerReportsProgress = true;
-            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
-            this.backgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_ProgressChanged);
-            this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
-            // 
-            // pbSendingEvernote
-            // 
-            this.pbSendingEvernote.Location = new System.Drawing.Point(18, 337);
-            this.pbSendingEvernote.Name = "pbSendingEvernote";
-            this.pbSendingEvernote.Size = new System.Drawing.Size(239, 23);
-            this.pbSendingEvernote.TabIndex = 8;
+            this.bgSendToEvernote.WorkerReportsProgress = true;
+            this.bgSendToEvernote.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgSendToEvernote_DoWork);
+            this.bgSendToEvernote.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgSendToEvernote_ProgressChanged);
+            this.bgSendToEvernote.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgSendToEvernote_RunWorkerCompleted);
             // 
             // FormMain
             // 
@@ -258,7 +259,7 @@
         private System.Windows.Forms.ListView listView;
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.ToolStripMenuItem statusToolStripMenuItem;
-        private System.ComponentModel.BackgroundWorker backgroundWorker;
+        private System.ComponentModel.BackgroundWorker bgSendToEvernote;
         private System.Windows.Forms.ToolStripMenuItem logoutOToolStripMenuItem;
         private System.Windows.Forms.ProgressBar pbSendingEvernote;
     }
