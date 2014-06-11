@@ -34,5 +34,17 @@ namespace EverImage.Properties {
                 this["EvernoteToken"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string EvernoteBookName {
+            get {
+                return ((string)(this["EvernoteBookName"]));
+            }
+            set {
+                this["EvernoteBookName"] = value;
+            }
+        }
     }
 }

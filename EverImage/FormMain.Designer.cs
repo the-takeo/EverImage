@@ -47,6 +47,7 @@
             this.listView = new System.Windows.Forms.ListView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.bgSendToEvernote = new System.ComponentModel.BackgroundWorker();
+            this.noteBookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.gbTop.SuspendLayout();
             this.gbImages.SuspendLayout();
@@ -76,36 +77,37 @@
             this.settingSToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loginLToolStripMenuItem,
             this.statusToolStripMenuItem,
-            this.logoutOToolStripMenuItem});
+            this.logoutOToolStripMenuItem,
+            this.noteBookToolStripMenuItem});
             this.settingSToolStripMenuItem.Name = "settingSToolStripMenuItem";
-            this.settingSToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.settingSToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.settingSToolStripMenuItem.Text = "Evernote(&S)";
             this.settingSToolStripMenuItem.MouseEnter += new System.EventHandler(this.settingSToolStripMenuItem_MouseEnter);
             // 
             // loginLToolStripMenuItem
             // 
             this.loginLToolStripMenuItem.Name = "loginLToolStripMenuItem";
-            this.loginLToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.loginLToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loginLToolStripMenuItem.Text = "Login(&L)";
             this.loginLToolStripMenuItem.Click += new System.EventHandler(this.loginLToolStripMenuItem_Click);
             // 
             // statusToolStripMenuItem
             // 
             this.statusToolStripMenuItem.Name = "statusToolStripMenuItem";
-            this.statusToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.statusToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.statusToolStripMenuItem.Text = "Status";
             // 
             // logoutOToolStripMenuItem
             // 
             this.logoutOToolStripMenuItem.Name = "logoutOToolStripMenuItem";
-            this.logoutOToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.logoutOToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.logoutOToolStripMenuItem.Text = "Logout(&O)";
             this.logoutOToolStripMenuItem.Click += new System.EventHandler(this.logoutOToolStripMenuItem_Click);
             // 
             // closeCToolStripMenuItem
             // 
             this.closeCToolStripMenuItem.Name = "closeCToolStripMenuItem";
-            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.closeCToolStripMenuItem.Text = "Close(&C)";
             this.closeCToolStripMenuItem.Click += new System.EventHandler(this.closeCToolStripMenuItem_Click);
             // 
@@ -220,6 +222,12 @@
             this.bgSendToEvernote.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgSendToEvernote_ProgressChanged);
             this.bgSendToEvernote.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgSendToEvernote_RunWorkerCompleted);
             // 
+            // noteBookToolStripMenuItem
+            // 
+            this.noteBookToolStripMenuItem.Name = "noteBookToolStripMenuItem";
+            this.noteBookToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.noteBookToolStripMenuItem.Text = "NoteBook";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -262,6 +270,7 @@
         private System.ComponentModel.BackgroundWorker bgSendToEvernote;
         private System.Windows.Forms.ToolStripMenuItem logoutOToolStripMenuItem;
         private System.Windows.Forms.ProgressBar pbSendingEvernote;
+        private System.Windows.Forms.ToolStripMenuItem noteBookToolStripMenuItem;
     }
 }
 

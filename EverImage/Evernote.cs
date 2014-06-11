@@ -15,6 +15,13 @@ namespace EverImage
     /// </summary>
     class Evernote
     {
+        static String evernoteHost = "sandbox.evernote.com";
+
+        /// <summary>
+        /// Evernoteのユーザー名を取得する
+        /// </summary>
+        /// <param name="EvernoteToken">Evernoteトークン</param>
+        /// <returns></returns>
         static public string GetEvernoteUserName(string EvernoteToken)
         {
             string authToken = EvernoteToken;
@@ -28,15 +35,42 @@ namespace EverImage
             return userStore.getUser(authToken).Username;
         }
 
+        static public Dictionary<string, string> GetEvetnoteNotebook(string EvernoteToken)
+        {
+            string authToken = EvernoteToken;
+
+            Uri userStoreUrl = new Uri("https://" + evernoteHost + "/edam/user");
+            TTransport userStoreTransport = new THttpClient(userStoreUrl);
+            TProtocol userStoreProtocol = new TBinaryProtocol(userStoreTransport);
+            UserStore.Client userStore = new UserStore.Client(userStoreProtocol);
+
+            String noteStoreUrl = userStore.getNoteStoreUrl(authToken);
+
+            TTransport noteStoreTransport = new THttpClient(new Uri(noteStoreUrl));
+            TProtocol noteStoreProtocol = new TBinaryProtocol(noteStoreTransport);
+            NoteStore.Client noteStore = new NoteStore.Client(noteStoreProtocol);
+
+            List<Notebook> notebooks = noteStore.listNotebooks(authToken);
+
+            Dictionary<string, string> notebookNames = new Dictionary<string, string>();
+
+            foreach (var note in notebooks)
+            {
+                notebookNames.Add(note.Name, note.Guid);
+            }
+
+            return notebookNames;
+        }
+
+
         /// <summary>
         /// Evernoteに画像を送信する
         /// </summary>
         /// <param name="sendImage">送信する画像</param>
         /// <param name="EvernoteToken">Evernoteトークン</param>
-        static public void SendToEvernote(Image sendImage, string EvernoteToken)
+        static public void SendToEvernote(Image sendImage, string EvernoteToken,string EvernoteNotebookName)
         {
             string authToken = EvernoteToken;
-            String evernoteHost = "sandbox.evernote.com";
 
             Uri userStoreUrl = new Uri("https://" + evernoteHost + "/edam/user");
             TTransport userStoreTransport = new THttpClient(userStoreUrl);
@@ -47,8 +81,6 @@ namespace EverImage
             TTransport noteStoreTransport = new THttpClient(new Uri(noteStoreUrl));
             TProtocol noteStoreProtocol = new TBinaryProtocol(noteStoreTransport);
             NoteStore.Client noteStore = new NoteStore.Client(noteStoreProtocol);
-
-            //List<Notebook> notebooks = noteStore.listNotebooks(authToken);
 
             Note note = new Note();
             note.Title = DateTime.Now.ToShortDateString();
@@ -68,6 +100,15 @@ namespace EverImage
 
             note.Resources = new List<Resource>();
             note.Resources.Add(resource);
+
+            foreach (var notebook in Evernote.GetEvetnoteNotebook(EvernoteToken))
+            {
+                if (notebook.Key == EvernoteNotebookName)
+                {
+                    note.NotebookGuid = notebook.Value;
+                    break;
+                }
+            }
 
             string hashHex = BitConverter.ToString(hash).Replace("-", "").ToLower();
 

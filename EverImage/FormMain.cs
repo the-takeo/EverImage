@@ -96,6 +96,16 @@ namespace EverImage
                 {
                     statusToolStripMenuItem.Text
                        = string.Format(ResEverImage.LoginToEvernote, Evernote.GetEvernoteUserName(EvernoteToken));
+
+                    noteBookToolStripMenuItem.DropDownItems.Clear();
+                    foreach (var notebook in Evernote.GetEvetnoteNotebook(EvernoteToken))
+                    {
+                        ToolStripMenuItem noteStrip = new ToolStripMenuItem(notebook.Key);
+                        noteStrip.Click += noteStrip_Click;
+                        noteBookToolStripMenuItem.DropDownItems.Add(noteStrip);
+                        noteStrip.Checked = (notebook.Key == EverImage.Properties.Settings.Default.EvernoteBookName);
+                    }
+                    noteBookToolStripMenuItem.Enabled = true;
                 }
                 catch
                 {
@@ -103,14 +113,21 @@ namespace EverImage
                 }
                 loginLToolStripMenuItem.Enabled = false;
                 logoutOToolStripMenuItem.Enabled = true;
-                
+
             }
             else
             {
                 statusToolStripMenuItem.Text = ResEverImage.LogoutFromEvernote;
                 loginLToolStripMenuItem.Enabled = true;
                 logoutOToolStripMenuItem.Enabled = false;
+                noteBookToolStripMenuItem.Enabled = false;
             }
+        }
+
+        void noteStrip_Click(object sender, EventArgs e)
+        {
+            EverImage.Properties.Settings.Default.EvernoteBookName = sender.ToString();
+            EverImage.Properties.Settings.Default.Save();
         }
 
         /// <summary>
@@ -177,7 +194,8 @@ namespace EverImage
             {
                 try
                 {
-                    Evernote.SendToEvernote(Images[index], EvernoteToken);
+                    Evernote.SendToEvernote(Images[index], EvernoteToken,
+                        EverImage.Properties.Settings.Default.EvernoteBookName);
                 }
                 catch
                 {
