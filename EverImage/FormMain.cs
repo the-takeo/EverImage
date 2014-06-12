@@ -38,6 +38,8 @@ namespace EverImage
             EvernoteToken = EverImage.Properties.Settings.Default.EvernoteToken;
             statusToolStripMenuItem.Enabled = false;
 
+            tbEvernoteTags.Text = EverImage.Properties.Settings.Default.EvernoteTags;
+            
             this.MinimumSize = new System.Drawing.Size(400, 520);
 
             endProgress();
@@ -51,6 +53,7 @@ namespace EverImage
             btnGetImages.Enabled = false;
             btnEvernote.Enabled = false;
             tbUrl.Enabled = false;
+            tbEvernoteTags.Enabled = false;
             listView.Enabled = false;
         }
 
@@ -62,6 +65,7 @@ namespace EverImage
             btnGetImages.Enabled = true;
             btnEvernote.Enabled = true;
             tbUrl.Enabled = true;
+            tbEvernoteTags.Enabled = true;
             listView.Enabled = true;
         }
 
@@ -94,17 +98,23 @@ namespace EverImage
             {
                 try
                 {
+                    settingSToolStripMenuItem.Text = ResEverImage.GettingEvernoteInfo;
+
                     statusToolStripMenuItem.Text
                        = string.Format(ResEverImage.LoginToEvernote, Evernote.GetEvernoteUserName(EvernoteToken));
 
                     noteBookToolStripMenuItem.DropDownItems.Clear();
-                    foreach (var notebook in Evernote.GetEvetnoteNotebook(EvernoteToken))
+
+                    List<string> evernotebooks = new List<string>(Evernote.GetEvetnoteNotebook(EvernoteToken).Keys);
+
+                    for (int i = evernotebooks.Count - 1; i >= 0; i--)
                     {
-                        ToolStripMenuItem noteStrip = new ToolStripMenuItem(notebook.Key);
+                        ToolStripMenuItem noteStrip = new ToolStripMenuItem(evernotebooks[i]);
                         noteStrip.Click += noteStrip_Click;
                         noteBookToolStripMenuItem.DropDownItems.Add(noteStrip);
-                        noteStrip.Checked = (notebook.Key == EverImage.Properties.Settings.Default.EvernoteBookName);
+                        noteStrip.Checked = (evernotebooks[i] == EverImage.Properties.Settings.Default.EvernoteBookName);
                     }
+
                     noteBookToolStripMenuItem.Enabled = true;
                 }
                 catch
@@ -113,6 +123,8 @@ namespace EverImage
                 }
                 loginLToolStripMenuItem.Enabled = false;
                 logoutOToolStripMenuItem.Enabled = true;
+
+                settingSToolStripMenuItem.Text = ResEverImage.EndGettingEvernoteInfo;
 
             }
             else
@@ -178,6 +190,9 @@ namespace EverImage
             beginProgress();
             pbSendingEvernote.Enabled = true;
 
+            EverImage.Properties.Settings.Default.EvernoteTags = tbEvernoteTags.Text;
+            EverImage.Properties.Settings.Default.Save();
+
             foreach (ListViewItem item in listView.CheckedItems)
             {
                 SendImagesIndex.Add(item.Index, item.Text);
@@ -190,12 +205,14 @@ namespace EverImage
         {
             int count = 1;
 
+            List<string> evernoteTags = new List<string>(tbEvernoteTags.Text.Split(','));
+
             foreach (int index in SendImagesIndex.Keys)
             {
                 try
                 {
                     Evernote.SendToEvernote(Images[index], EvernoteToken,
-                        EverImage.Properties.Settings.Default.EvernoteBookName);
+                        EverImage.Properties.Settings.Default.EvernoteBookName, evernoteTags);
                 }
                 catch
                 {

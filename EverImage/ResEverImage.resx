@@ -123,8 +123,14 @@
   <data name="CompletedSending" xml:space="preserve">
     <value>送信が完了しました。</value>
   </data>
+  <data name="EndGettingEvernoteInfo" xml:space="preserve">
+    <value>Evernote</value>
+  </data>
   <data name="FailedGettingEvernoteUserName" xml:space="preserve">
     <value>Evernoteの情報取得に失敗しました。接続状況を確認して下さい。接続に問題がない場合、再ログインをしてください。</value>
+  </data>
+  <data name="GettingEvernoteInfo" xml:space="preserve">
+    <value>Evernote(情報を取得中です)</value>
   </data>
   <data name="GettingImagesFromWeb" xml:space="preserve">
     <value>Webページから画像を取得中です。</value>

@@ -21,7 +21,7 @@ namespace EverImage
         /// Evernoteのユーザー名を取得する
         /// </summary>
         /// <param name="EvernoteToken">Evernoteトークン</param>
-        /// <returns></returns>
+        /// <returns>ユーザー名</returns>
         static public string GetEvernoteUserName(string EvernoteToken)
         {
             string authToken = EvernoteToken;
@@ -35,6 +35,11 @@ namespace EverImage
             return userStore.getUser(authToken).Username;
         }
 
+        /// <summary>
+        /// Evernoteのノートブック情報を取得する
+        /// </summary>
+        /// <param name="EvernoteToken">Evernoteトークン</param>
+        /// <returns>ノートブック名とノートブックGuidのDictionary</returns>
         static public Dictionary<string, string> GetEvetnoteNotebook(string EvernoteToken)
         {
             string authToken = EvernoteToken;
@@ -68,7 +73,8 @@ namespace EverImage
         /// </summary>
         /// <param name="sendImage">送信する画像</param>
         /// <param name="EvernoteToken">Evernoteトークン</param>
-        static public void SendToEvernote(Image sendImage, string EvernoteToken,string EvernoteNotebookName)
+        static public void SendToEvernote(Image sendImage, string EvernoteToken,
+            string evernoteNotebookName,List<string> evernoteTags)
         {
             string authToken = EvernoteToken;
 
@@ -103,12 +109,14 @@ namespace EverImage
 
             foreach (var notebook in Evernote.GetEvetnoteNotebook(EvernoteToken))
             {
-                if (notebook.Key == EvernoteNotebookName)
+                if (notebook.Key == evernoteNotebookName)
                 {
                     note.NotebookGuid = notebook.Value;
                     break;
                 }
             }
+
+            note.TagGuids = evernoteTags;
 
             string hashHex = BitConverter.ToString(hash).Replace("-", "").ToLower();
 

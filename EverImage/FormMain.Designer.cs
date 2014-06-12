@@ -35,6 +35,7 @@
             this.loginLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.noteBookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblUrl = new System.Windows.Forms.Label();
             this.gbTop = new System.Windows.Forms.GroupBox();
@@ -47,7 +48,8 @@
             this.listView = new System.Windows.Forms.ListView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.bgSendToEvernote = new System.ComponentModel.BackgroundWorker();
-            this.noteBookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tbEvernoteTags = new System.Windows.Forms.TextBox();
+            this.lblEvernoteTags = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.gbTop.SuspendLayout();
             this.gbImages.SuspendLayout();
@@ -104,6 +106,12 @@
             this.logoutOToolStripMenuItem.Text = "Logout(&O)";
             this.logoutOToolStripMenuItem.Click += new System.EventHandler(this.logoutOToolStripMenuItem_Click);
             // 
+            // noteBookToolStripMenuItem
+            // 
+            this.noteBookToolStripMenuItem.Name = "noteBookToolStripMenuItem";
+            this.noteBookToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.noteBookToolStripMenuItem.Text = "NoteBook";
+            // 
             // closeCToolStripMenuItem
             // 
             this.closeCToolStripMenuItem.Name = "closeCToolStripMenuItem";
@@ -158,6 +166,8 @@
             this.gbImages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbImages.Controls.Add(this.lblEvernoteTags);
+            this.gbImages.Controls.Add(this.tbEvernoteTags);
             this.gbImages.Controls.Add(this.pbSendingEvernote);
             this.gbImages.Controls.Add(this.btnEvernote);
             this.gbImages.Controls.Add(this.lblStatus);
@@ -171,9 +181,9 @@
             // pbSendingEvernote
             // 
             this.pbSendingEvernote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pbSendingEvernote.Location = new System.Drawing.Point(18, 337);
+            this.pbSendingEvernote.Location = new System.Drawing.Point(8, 337);
             this.pbSendingEvernote.Name = "pbSendingEvernote";
-            this.pbSendingEvernote.Size = new System.Drawing.Size(239, 23);
+            this.pbSendingEvernote.Size = new System.Drawing.Size(249, 23);
             this.pbSendingEvernote.TabIndex = 8;
             // 
             // btnEvernote
@@ -191,7 +201,7 @@
             // 
             this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(16, 322);
+            this.lblStatus.Location = new System.Drawing.Point(6, 322);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(38, 12);
             this.lblStatus.TabIndex = 6;
@@ -203,9 +213,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listView.CheckBoxes = true;
-            this.listView.Location = new System.Drawing.Point(18, 18);
+            this.listView.Location = new System.Drawing.Point(8, 18);
             this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(336, 301);
+            this.listView.Size = new System.Drawing.Size(346, 264);
             this.listView.TabIndex = 1;
             this.listView.UseCompatibleStateImageBehavior = false;
             // 
@@ -222,11 +232,21 @@
             this.bgSendToEvernote.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgSendToEvernote_ProgressChanged);
             this.bgSendToEvernote.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgSendToEvernote_RunWorkerCompleted);
             // 
-            // noteBookToolStripMenuItem
+            // tbEvernoteTags
             // 
-            this.noteBookToolStripMenuItem.Name = "noteBookToolStripMenuItem";
-            this.noteBookToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.noteBookToolStripMenuItem.Text = "NoteBook";
+            this.tbEvernoteTags.Location = new System.Drawing.Point(8, 300);
+            this.tbEvernoteTags.Name = "tbEvernoteTags";
+            this.tbEvernoteTags.Size = new System.Drawing.Size(346, 19);
+            this.tbEvernoteTags.TabIndex = 9;
+            // 
+            // lblEvernoteTags
+            // 
+            this.lblEvernoteTags.AutoSize = true;
+            this.lblEvernoteTags.Location = new System.Drawing.Point(6, 285);
+            this.lblEvernoteTags.Name = "lblEvernoteTags";
+            this.lblEvernoteTags.Size = new System.Drawing.Size(230, 12);
+            this.lblEvernoteTags.TabIndex = 10;
+            this.lblEvernoteTags.Text = "タグ(複数付ける場合はカンマで区切ってください)";
             // 
             // FormMain
             // 
@@ -271,6 +291,8 @@
         private System.Windows.Forms.ToolStripMenuItem logoutOToolStripMenuItem;
         private System.Windows.Forms.ProgressBar pbSendingEvernote;
         private System.Windows.Forms.ToolStripMenuItem noteBookToolStripMenuItem;
+        private System.Windows.Forms.Label lblEvernoteTags;
+        private System.Windows.Forms.TextBox tbEvernoteTags;
     }
 }
 

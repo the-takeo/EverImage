@@ -79,11 +79,29 @@ namespace EverImage {
         }
         
         /// <summary>
+        ///   Evernote に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string EndGettingEvernoteInfo {
+            get {
+                return ResourceManager.GetString("EndGettingEvernoteInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Evernoteの情報取得に失敗しました。接続状況を確認して下さい。接続に問題がない場合、再ログインをしてください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string FailedGettingEvernoteUserName {
             get {
                 return ResourceManager.GetString("FailedGettingEvernoteUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Evernote(情報を取得中です) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string GettingEvernoteInfo {
+            get {
+                return ResourceManager.GetString("GettingEvernoteInfo", resourceCulture);
             }
         }
         
