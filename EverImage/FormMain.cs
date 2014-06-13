@@ -38,6 +38,7 @@ namespace EverImage
             EvernoteToken = EverImage.Properties.Settings.Default.EvernoteToken;
             statusToolStripMenuItem.Enabled = false;
 
+            tbUrl.Text = EverImage.Properties.Settings.Default.CurrentUrl;
             tbEvernoteTags.Text = EverImage.Properties.Settings.Default.EvernoteTags;
             
             this.MinimumSize = new System.Drawing.Size(400, 520);
@@ -169,6 +170,9 @@ namespace EverImage
         {
             beginProgress();
             lblStatus.Text = ResEverImage.GettingImagesFromWeb;
+
+            EverImage.Properties.Settings.Default.CurrentUrl = tbUrl.Text;
+            EverImage.Properties.Settings.Default.Save();
 
             listView.Clear();
             imageList.Images.Clear();

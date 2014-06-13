@@ -58,5 +58,17 @@ namespace EverImage.Properties {
                 this["EvernoteTags"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CurrentUrl {
+            get {
+                return ((string)(this["CurrentUrl"]));
+            }
+            set {
+                this["CurrentUrl"] = value;
+            }
+        }
     }
 }

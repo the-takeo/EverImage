@@ -116,7 +116,7 @@ namespace EverImage
                 }
             }
 
-            note.TagGuids = evernoteTags;
+            note.TagNames = evernoteTags;
 
             string hashHex = BitConverter.ToString(hash).Replace("-", "").ToLower();
 

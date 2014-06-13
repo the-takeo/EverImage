@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,14 +43,14 @@
             this.btnGetImages = new System.Windows.Forms.Button();
             this.tbUrl = new System.Windows.Forms.TextBox();
             this.gbImages = new System.Windows.Forms.GroupBox();
+            this.lblEvernoteTags = new System.Windows.Forms.Label();
+            this.tbEvernoteTags = new System.Windows.Forms.TextBox();
             this.pbSendingEvernote = new System.Windows.Forms.ProgressBar();
             this.btnEvernote = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
             this.listView = new System.Windows.Forms.ListView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.bgSendToEvernote = new System.ComponentModel.BackgroundWorker();
-            this.tbEvernoteTags = new System.Windows.Forms.TextBox();
-            this.lblEvernoteTags = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.gbTop.SuspendLayout();
             this.gbImages.SuspendLayout();
@@ -82,40 +83,40 @@
             this.logoutOToolStripMenuItem,
             this.noteBookToolStripMenuItem});
             this.settingSToolStripMenuItem.Name = "settingSToolStripMenuItem";
-            this.settingSToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingSToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.settingSToolStripMenuItem.Text = "Evernote(&S)";
             this.settingSToolStripMenuItem.MouseEnter += new System.EventHandler(this.settingSToolStripMenuItem_MouseEnter);
             // 
             // loginLToolStripMenuItem
             // 
             this.loginLToolStripMenuItem.Name = "loginLToolStripMenuItem";
-            this.loginLToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loginLToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.loginLToolStripMenuItem.Text = "Login(&L)";
             this.loginLToolStripMenuItem.Click += new System.EventHandler(this.loginLToolStripMenuItem_Click);
             // 
             // statusToolStripMenuItem
             // 
             this.statusToolStripMenuItem.Name = "statusToolStripMenuItem";
-            this.statusToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.statusToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.statusToolStripMenuItem.Text = "Status";
             // 
             // logoutOToolStripMenuItem
             // 
             this.logoutOToolStripMenuItem.Name = "logoutOToolStripMenuItem";
-            this.logoutOToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.logoutOToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.logoutOToolStripMenuItem.Text = "Logout(&O)";
             this.logoutOToolStripMenuItem.Click += new System.EventHandler(this.logoutOToolStripMenuItem_Click);
             // 
             // noteBookToolStripMenuItem
             // 
             this.noteBookToolStripMenuItem.Name = "noteBookToolStripMenuItem";
-            this.noteBookToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.noteBookToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.noteBookToolStripMenuItem.Text = "NoteBook";
             // 
             // closeCToolStripMenuItem
             // 
             this.closeCToolStripMenuItem.Name = "closeCToolStripMenuItem";
-            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.closeCToolStripMenuItem.Text = "Close(&C)";
             this.closeCToolStripMenuItem.Click += new System.EventHandler(this.closeCToolStripMenuItem_Click);
             // 
@@ -178,6 +179,22 @@
             this.gbImages.TabIndex = 4;
             this.gbImages.TabStop = false;
             // 
+            // lblEvernoteTags
+            // 
+            this.lblEvernoteTags.AutoSize = true;
+            this.lblEvernoteTags.Location = new System.Drawing.Point(6, 285);
+            this.lblEvernoteTags.Name = "lblEvernoteTags";
+            this.lblEvernoteTags.Size = new System.Drawing.Size(230, 12);
+            this.lblEvernoteTags.TabIndex = 10;
+            this.lblEvernoteTags.Text = "タグ(複数付ける場合はカンマで区切ってください)";
+            // 
+            // tbEvernoteTags
+            // 
+            this.tbEvernoteTags.Location = new System.Drawing.Point(8, 300);
+            this.tbEvernoteTags.Name = "tbEvernoteTags";
+            this.tbEvernoteTags.Size = new System.Drawing.Size(346, 19);
+            this.tbEvernoteTags.TabIndex = 9;
+            // 
             // pbSendingEvernote
             // 
             this.pbSendingEvernote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -232,22 +249,6 @@
             this.bgSendToEvernote.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgSendToEvernote_ProgressChanged);
             this.bgSendToEvernote.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgSendToEvernote_RunWorkerCompleted);
             // 
-            // tbEvernoteTags
-            // 
-            this.tbEvernoteTags.Location = new System.Drawing.Point(8, 300);
-            this.tbEvernoteTags.Name = "tbEvernoteTags";
-            this.tbEvernoteTags.Size = new System.Drawing.Size(346, 19);
-            this.tbEvernoteTags.TabIndex = 9;
-            // 
-            // lblEvernoteTags
-            // 
-            this.lblEvernoteTags.AutoSize = true;
-            this.lblEvernoteTags.Location = new System.Drawing.Point(6, 285);
-            this.lblEvernoteTags.Name = "lblEvernoteTags";
-            this.lblEvernoteTags.Size = new System.Drawing.Size(230, 12);
-            this.lblEvernoteTags.TabIndex = 10;
-            this.lblEvernoteTags.Text = "タグ(複数付ける場合はカンマで区切ってください)";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -256,8 +257,10 @@
             this.Controls.Add(this.gbImages);
             this.Controls.Add(this.gbTop);
             this.Controls.Add(this.menuStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.Name = "FormMain";
+            this.ShowIcon = false;
             this.Text = "EverImage";
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();

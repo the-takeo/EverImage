@@ -31,9 +31,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Evernote">
-      <HintPath>..\..\..\Users\SHOHO\Documents\Visual Studio 2013\Projects\TagPic\TagPic\dll\Evernote.dll</HintPath>
+    <Reference Include="Evernote, Version=1.0.5135.39557, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\Evernote.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,8 +50,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thrift">
-      <HintPath>..\..\..\Users\SHOHO\Desktop\evernote-sdk-csharp-master\evernote-sdk-csharp-master\src\Thrift\bin\Debug\Thrift.dll</HintPath>
+    <Reference Include="Thrift, Version=0.8.0.39556, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\Thrift.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +102,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dll\Evernote.dll" />
+    <Content Include="dll\Thrift.dll" />
+    <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EvernoteOAuth\EvernoteOAuth.csproj">
