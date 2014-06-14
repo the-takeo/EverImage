@@ -7,6 +7,7 @@ using Evernote.EDAM.Type;
 using Evernote.EDAM.UserStore;
 using Evernote.EDAM.NoteStore;
 using System.Drawing;
+using System.Text;
 
 namespace EverImage
 {
@@ -73,7 +74,7 @@ namespace EverImage
         /// </summary>
         /// <param name="sendImage">送信する画像</param>
         /// <param name="EvernoteToken">Evernoteトークン</param>
-        static public void SendToEvernote(Image sendImage, string EvernoteToken,
+        static public void SendToEvernote(List<Image> sendImages, string EvernoteToken,
             string evernoteNotebookName,List<string> evernoteTags)
         {
             string authToken = EvernoteToken;
@@ -91,22 +92,6 @@ namespace EverImage
             Note note = new Note();
             note.Title = DateTime.Now.ToShortDateString();
 
-            ImageConverter converter = new ImageConverter();
-            byte[] image = (byte[])converter.ConvertTo(sendImage, typeof(byte[]));
-            byte[] hash = new MD5CryptoServiceProvider().ComputeHash(image);
-
-            Data data = new Data();
-            data.Size = image.Length;
-            data.BodyHash = hash;
-            data.Body = image;
-
-            Resource resource = new Resource();
-            resource.Mime = "image/png";
-            resource.Data = data;
-
-            note.Resources = new List<Resource>();
-            note.Resources.Add(resource);
-
             foreach (var notebook in Evernote.GetEvetnoteNotebook(EvernoteToken))
             {
                 if (notebook.Key == evernoteNotebookName)
@@ -118,13 +103,44 @@ namespace EverImage
 
             note.TagNames = evernoteTags;
 
-            string hashHex = BitConverter.ToString(hash).Replace("-", "").ToLower();
+            StringBuilder content = new StringBuilder();
+            content.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            content.Append("<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">");
+            content.Append("<en-note>");
 
-            note.Content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-                "<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">" +
-                "<en-note>" +
-                "<en-media type=\"image/png\" hash=\"" + hashHex + "\"/>" +
-                "</en-note>";
+            note.Resources = new List<Resource>();
+
+            foreach (var sendImage in sendImages)
+            {
+                ImageConverter converter = new ImageConverter();
+                byte[] image = (byte[])converter.ConvertTo(sendImage, typeof(byte[]));
+                byte[] hash = new MD5CryptoServiceProvider().ComputeHash(image);
+
+                Data data = new Data();
+                data.Size = image.Length;
+                data.BodyHash = hash;
+                data.Body = image;
+
+                Resource resource = new Resource();
+                resource.Mime = "image/png";
+                resource.Data = data;
+
+                
+                note.Resources.Add(resource);
+
+                string hashHex = BitConverter.ToString(hash).Replace("-", "").ToLower();
+
+                content.Append("<span>");
+                content.Append("<en-media type=\"image/png\" hash=\"");
+                content.Append(hashHex);
+                content.Append("\"/>");
+                content.Append("</span>");
+                content.Append("<br/>");
+            }
+
+            content.Append("</en-note>");
+
+            note.Content = content.ToString();
 
             Note createdNote = noteStore.createNote(authToken, note);
         }
