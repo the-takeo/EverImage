@@ -51,6 +51,7 @@
             this.listView = new System.Windows.Forms.ListView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.bgSendToEvernote = new System.ComponentModel.BackgroundWorker();
+            this.cbSendinOneNote = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             this.gbTop.SuspendLayout();
             this.gbImages.SuspendLayout();
@@ -167,6 +168,7 @@
             this.gbImages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbImages.Controls.Add(this.cbSendinOneNote);
             this.gbImages.Controls.Add(this.lblEvernoteTags);
             this.gbImages.Controls.Add(this.tbEvernoteTags);
             this.gbImages.Controls.Add(this.pbSendingEvernote);
@@ -175,14 +177,14 @@
             this.gbImages.Controls.Add(this.listView);
             this.gbImages.Location = new System.Drawing.Point(12, 103);
             this.gbImages.Name = "gbImages";
-            this.gbImages.Size = new System.Drawing.Size(360, 366);
+            this.gbImages.Size = new System.Drawing.Size(360, 446);
             this.gbImages.TabIndex = 4;
             this.gbImages.TabStop = false;
             // 
             // lblEvernoteTags
             // 
             this.lblEvernoteTags.AutoSize = true;
-            this.lblEvernoteTags.Location = new System.Drawing.Point(6, 285);
+            this.lblEvernoteTags.Location = new System.Drawing.Point(6, 343);
             this.lblEvernoteTags.Name = "lblEvernoteTags";
             this.lblEvernoteTags.Size = new System.Drawing.Size(230, 12);
             this.lblEvernoteTags.TabIndex = 10;
@@ -190,7 +192,7 @@
             // 
             // tbEvernoteTags
             // 
-            this.tbEvernoteTags.Location = new System.Drawing.Point(8, 300);
+            this.tbEvernoteTags.Location = new System.Drawing.Point(8, 358);
             this.tbEvernoteTags.Name = "tbEvernoteTags";
             this.tbEvernoteTags.Size = new System.Drawing.Size(346, 19);
             this.tbEvernoteTags.TabIndex = 9;
@@ -198,7 +200,7 @@
             // pbSendingEvernote
             // 
             this.pbSendingEvernote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pbSendingEvernote.Location = new System.Drawing.Point(8, 337);
+            this.pbSendingEvernote.Location = new System.Drawing.Point(8, 417);
             this.pbSendingEvernote.Name = "pbSendingEvernote";
             this.pbSendingEvernote.Size = new System.Drawing.Size(249, 23);
             this.pbSendingEvernote.TabIndex = 8;
@@ -206,7 +208,7 @@
             // btnEvernote
             // 
             this.btnEvernote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEvernote.Location = new System.Drawing.Point(263, 337);
+            this.btnEvernote.Location = new System.Drawing.Point(263, 417);
             this.btnEvernote.Name = "btnEvernote";
             this.btnEvernote.Size = new System.Drawing.Size(91, 23);
             this.btnEvernote.TabIndex = 7;
@@ -218,7 +220,7 @@
             // 
             this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(6, 322);
+            this.lblStatus.Location = new System.Drawing.Point(6, 402);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(38, 12);
             this.lblStatus.TabIndex = 6;
@@ -232,7 +234,7 @@
             this.listView.CheckBoxes = true;
             this.listView.Location = new System.Drawing.Point(8, 18);
             this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(346, 264);
+            this.listView.Size = new System.Drawing.Size(346, 322);
             this.listView.TabIndex = 1;
             this.listView.UseCompatibleStateImageBehavior = false;
             // 
@@ -249,18 +251,27 @@
             this.bgSendToEvernote.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgSendToEvernote_ProgressChanged);
             this.bgSendToEvernote.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgSendToEvernote_RunWorkerCompleted);
             // 
+            // cbSendinOneNote
+            // 
+            this.cbSendinOneNote.AutoSize = true;
+            this.cbSendinOneNote.Location = new System.Drawing.Point(8, 383);
+            this.cbSendinOneNote.Name = "cbSendinOneNote";
+            this.cbSendinOneNote.Size = new System.Drawing.Size(168, 16);
+            this.cbSendinOneNote.TabIndex = 11;
+            this.cbSendinOneNote.Text = "1ノートブックにまとめて送信する";
+            this.cbSendinOneNote.UseVisualStyleBackColor = true;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 481);
+            this.ClientSize = new System.Drawing.Size(384, 561);
             this.Controls.Add(this.gbImages);
             this.Controls.Add(this.gbTop);
             this.Controls.Add(this.menuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.Name = "FormMain";
-            this.ShowIcon = false;
             this.Text = "EverImage";
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
@@ -296,6 +307,7 @@
         private System.Windows.Forms.ToolStripMenuItem noteBookToolStripMenuItem;
         private System.Windows.Forms.Label lblEvernoteTags;
         private System.Windows.Forms.TextBox tbEvernoteTags;
+        private System.Windows.Forms.CheckBox cbSendinOneNote;
     }
 }
 

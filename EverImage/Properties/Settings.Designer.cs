@@ -70,5 +70,17 @@ namespace EverImage.Properties {
                 this["CurrentUrl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SendOneNote {
+            get {
+                return ((bool)(this["SendOneNote"]));
+            }
+            set {
+                this["SendOneNote"] = value;
+            }
+        }
     }
 }

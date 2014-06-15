@@ -40,6 +40,7 @@ namespace EverImage
 
             tbUrl.Text = EverImage.Properties.Settings.Default.CurrentUrl;
             tbEvernoteTags.Text = EverImage.Properties.Settings.Default.EvernoteTags;
+            cbSendinOneNote.Checked = EverImage.Properties.Settings.Default.SendOneNote;
             
             this.MinimumSize = new System.Drawing.Size(400, 520);
 
@@ -56,6 +57,7 @@ namespace EverImage
             tbUrl.Enabled = false;
             tbEvernoteTags.Enabled = false;
             listView.Enabled = false;
+            cbSendinOneNote.Enabled = false;
         }
 
         /// <summary>
@@ -68,6 +70,7 @@ namespace EverImage
             tbUrl.Enabled = true;
             tbEvernoteTags.Enabled = true;
             listView.Enabled = true;
+            cbSendinOneNote.Enabled = true;
         }
 
         private void loginLToolStripMenuItem_Click(object sender, EventArgs e)
@@ -195,6 +198,7 @@ namespace EverImage
             pbSendingEvernote.Enabled = true;
 
             EverImage.Properties.Settings.Default.EvernoteTags = tbEvernoteTags.Text;
+            EverImage.Properties.Settings.Default.SendOneNote = cbSendinOneNote.Checked;
             EverImage.Properties.Settings.Default.Save();
 
             foreach (ListViewItem item in listView.CheckedItems)
@@ -211,20 +215,46 @@ namespace EverImage
 
             List<string> evernoteTags = new List<string>(tbEvernoteTags.Text.Split(','));
 
-            foreach (int index in SendImagesIndex.Keys)
+            if (cbSendinOneNote.Checked == true)
             {
-                try
+                List<Image> sendImages = new List<Image>();
+
+                foreach (var index in SendImagesIndex.Keys)
                 {
-                    Evernote.SendToEvernote(Images[index], EvernoteToken,
-                        EverImage.Properties.Settings.Default.EvernoteBookName, evernoteTags);
-                }
-                catch
-                {
-                    ErrorImageUrls.Add(SendImagesIndex[index]);
+                    sendImages.Add(Images[index]);
                 }
 
-                bgSendToEvernote.ReportProgress(count);
-                count++;
+                try
+                {
+                    Evernote.SendToEvernote(sendImages, EvernoteToken,
+                        EverImage.Properties.Settings.Default.EvernoteBookName, evernoteTags);
+                }
+                catch(Exception ex)
+                {
+                    foreach (var index in SendImagesIndex.Keys)
+                    {
+                        ErrorImageUrls.Add(SendImagesIndex[index]);
+                    }
+                }
+            }
+
+            else
+            {
+                foreach (int index in SendImagesIndex.Keys)
+                {
+                    try
+                    {
+                        Evernote.SendToEvernote(new List<Image>() { Images[index] }, EvernoteToken,
+                            EverImage.Properties.Settings.Default.EvernoteBookName, evernoteTags);
+                    }
+                    catch
+                    {
+                        ErrorImageUrls.Add(SendImagesIndex[index]);
+                    }
+
+                    bgSendToEvernote.ReportProgress(count);
+                    count++;
+                }
             }
         }
 
