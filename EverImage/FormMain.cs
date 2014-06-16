@@ -19,7 +19,6 @@ namespace EverImage
 
         List<string> ErrorImageUrls = new List<string>();
 
-        string EvernoteToken = EverImage.Properties.Settings.Default.EvernoteToken;
         string consumerKey = ConsumerKeys.consumerKey; //公開不可
         string consumerSecret = ConsumerKeys.consumerSecret; //公開不可
 
@@ -35,16 +34,38 @@ namespace EverImage
 
             imageList.ImageSize = new Size(listWidth, listHeight);
             listView.LargeImageList = imageList;
-            EvernoteToken = EverImage.Properties.Settings.Default.EvernoteToken;
             statusToolStripMenuItem.Enabled = false;
+            statusfolderToolStripMenuItem.Enabled = false;
 
             tbUrl.Text = EverImage.Properties.Settings.Default.CurrentUrl;
             tbEvernoteTags.Text = EverImage.Properties.Settings.Default.EvernoteTags;
             cbSendinOneNote.Checked = EverImage.Properties.Settings.Default.SendOneNote;
-            
-            this.MinimumSize = new System.Drawing.Size(400, 520);
+
+            this.MinimumSize = new System.Drawing.Size(400, 640);
 
             endProgress();
+
+            reflesh();
+        }
+
+        private bool isAvailableEvernote
+        {
+            get { return string.IsNullOrEmpty(EvernoteToken) == false; }
+        }
+
+        private bool isAvailableDownload
+        {
+            get { return string.IsNullOrEmpty(FolderDirectory) == false; }
+        }
+
+        private string FolderDirectory
+        {
+            get { return EverImage.Properties.Settings.Default.Folder; }
+        }
+
+        private string EvernoteToken
+        {
+            get { return EverImage.Properties.Settings.Default.EvernoteToken; }
         }
 
         /// <summary>
@@ -54,6 +75,7 @@ namespace EverImage
         {
             btnGetImages.Enabled = false;
             btnEvernote.Enabled = false;
+            btnDownload.Enabled = false;
             tbUrl.Enabled = false;
             tbEvernoteTags.Enabled = false;
             listView.Enabled = false;
@@ -67,6 +89,7 @@ namespace EverImage
         {
             btnGetImages.Enabled = true;
             btnEvernote.Enabled = true;
+            btnDownload.Enabled = true;
             tbUrl.Enabled = true;
             tbEvernoteTags.Enabled = true;
             listView.Enabled = true;
@@ -80,7 +103,8 @@ namespace EverImage
             {
                 EverImage.Properties.Settings.Default.EvernoteToken = oauth.OAuthToken;
                 EverImage.Properties.Settings.Default.Save();
-                EvernoteToken = oauth.OAuthToken;
+
+                reflesh();
             }
         }
 
@@ -91,9 +115,10 @@ namespace EverImage
 
         private void logoutOToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EvernoteToken = string.Empty;
             EverImage.Properties.Settings.Default.EvernoteToken = string.Empty;
             EverImage.Properties.Settings.Default.Save();
+
+            reflesh();
         }
 
         private void settingSToolStripMenuItem_MouseEnter(object sender, EventArgs e)
@@ -229,7 +254,7 @@ namespace EverImage
                     Evernote.SendToEvernote(sendImages, EvernoteToken,
                         EverImage.Properties.Settings.Default.EvernoteBookName, evernoteTags);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     foreach (var index in SendImagesIndex.Keys)
                     {
@@ -320,6 +345,108 @@ namespace EverImage
             graphics.Dispose();
 
             return thumbnail;
+        }
+
+        private void settingSToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.Description = "Select Folder";
+            fbd.RootFolder = Environment.SpecialFolder.Desktop;
+
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                EverImage.Properties.Settings.Default.Folder = fbd.SelectedPath;
+                EverImage.Properties.Settings.Default.Save();
+            }
+
+            reflesh();
+        }
+
+        private void folderToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(FolderDirectory))
+                statusfolderToolStripMenuItem.Text = ResEverImage.SelectedNoFolder;
+            else
+                statusfolderToolStripMenuItem.Text = FolderDirectory;
+        }
+
+        //データの保持状況に基づき、各コントロールの状態を設定する
+        private void reflesh()
+        {
+            tbEvernoteTags.Enabled = isAvailableEvernote;
+            cbSendinOneNote.Enabled = isAvailableEvernote;
+            btnEvernote.Enabled = isAvailableEvernote;
+
+            btnDownload.Enabled = isAvailableDownload;
+        }
+
+        private void btnDownload_Click(object sender, EventArgs e)
+        {
+            beginProgress();
+
+            foreach (ListViewItem item in listView.CheckedItems)
+            {
+                SendImagesIndex.Add(item.Index, item.Text);
+            }
+
+            bgDownload.RunWorkerAsync();
+        }
+
+        private void bgDownload_DoWork(object sender, DoWorkEventArgs e)
+        {
+            int count = 1;
+
+            foreach (int index in SendImagesIndex.Keys)
+            {
+                try
+                {
+                    gi.StartDownload(Adresses[index], FolderDirectory);
+                }
+                catch
+                {
+                    ErrorImageUrls.Add(SendImagesIndex[index]);
+                }
+
+                bgDownload.ReportProgress(count);
+                count++;
+            }
+        }
+
+        private void bgDownload_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            lblStatus.Text
+                = string.Format(ResEverImage.ProgressOfDownloading,
+                listView.CheckedItems.Count.ToString(),
+                e.ProgressPercentage.ToString());
+
+            pbSendingEvernote.Value = 100 * e.ProgressPercentage / SendImagesIndex.Count;
+        }
+
+        private void bgDownload_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            lblStatus.Text = ResEverImage.CompletedDownloading;
+
+            if (ErrorImageUrls.Count != 0)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                foreach (var errorImageUrl in ErrorImageUrls)
+                {
+                    sb.Append(errorImageUrl);
+                    sb.Append(",");
+                }
+                sb.Remove(sb.Length - 1, 1);
+
+                MessageBox.Show(string.Format(ResEverImage.DownloadingError, sb.ToString()));
+
+                ErrorImageUrls.Clear();
+            }
+
+            SendImagesIndex.Clear();
+
+            pbSendingEvernote.Value = 0;
+            pbSendingEvernote.Enabled = false;
+            endProgress();
         }
     }
 }

@@ -61,6 +61,15 @@ namespace EverImage {
         }
         
         /// <summary>
+        ///   ダウンロードが完了しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CompletedDownloading {
+            get {
+                return ResourceManager.GetString("CompletedDownloading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   画像の取得が完了しました。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string CompletedGettingImages {
@@ -75,6 +84,15 @@ namespace EverImage {
         internal static string CompletedSending {
             get {
                 return ResourceManager.GetString("CompletedSending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0}のダウンロードに失敗しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DownloadingError {
+            get {
+                return ResourceManager.GetString("DownloadingError", resourceCulture);
             }
         }
         
@@ -133,11 +151,29 @@ namespace EverImage {
         }
         
         /// <summary>
+        ///   {0}画像中、{1}画像のダウンロードが完了しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ProgressOfDownloading {
+            get {
+                return ResourceManager.GetString("ProgressOfDownloading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   {0}画像中、{1}画像の送信が完了しました。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ProgressOfSending {
             get {
                 return ResourceManager.GetString("ProgressOfSending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   フォルダが指定されていません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectedNoFolder {
+            get {
+                return ResourceManager.GetString("SelectedNoFolder", resourceCulture);
             }
         }
         

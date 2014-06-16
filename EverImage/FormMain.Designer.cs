@@ -37,12 +37,17 @@
             this.statusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noteBookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.folderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingSToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusfolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblUrl = new System.Windows.Forms.Label();
             this.gbTop = new System.Windows.Forms.GroupBox();
             this.btnGetImages = new System.Windows.Forms.Button();
             this.tbUrl = new System.Windows.Forms.TextBox();
             this.gbImages = new System.Windows.Forms.GroupBox();
+            this.btnDownload = new System.Windows.Forms.Button();
+            this.cbSendinOneNote = new System.Windows.Forms.CheckBox();
             this.lblEvernoteTags = new System.Windows.Forms.Label();
             this.tbEvernoteTags = new System.Windows.Forms.TextBox();
             this.pbSendingEvernote = new System.Windows.Forms.ProgressBar();
@@ -51,7 +56,7 @@
             this.listView = new System.Windows.Forms.ListView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.bgSendToEvernote = new System.ComponentModel.BackgroundWorker();
-            this.cbSendinOneNote = new System.Windows.Forms.CheckBox();
+            this.bgDownload = new System.ComponentModel.BackgroundWorker();
             this.menuStrip.SuspendLayout();
             this.gbTop.SuspendLayout();
             this.gbImages.SuspendLayout();
@@ -71,6 +76,7 @@
             // 
             this.fileFToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.settingSToolStripMenuItem,
+            this.folderToolStripMenuItem,
             this.closeCToolStripMenuItem});
             this.fileFToolStripMenuItem.Name = "fileFToolStripMenuItem";
             this.fileFToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
@@ -113,6 +119,29 @@
             this.noteBookToolStripMenuItem.Name = "noteBookToolStripMenuItem";
             this.noteBookToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.noteBookToolStripMenuItem.Text = "NoteBook";
+            // 
+            // folderToolStripMenuItem
+            // 
+            this.folderToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingSToolStripMenuItem1,
+            this.statusfolderToolStripMenuItem});
+            this.folderToolStripMenuItem.Name = "folderToolStripMenuItem";
+            this.folderToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.folderToolStripMenuItem.Text = "Folder(&F)";
+            this.folderToolStripMenuItem.MouseEnter += new System.EventHandler(this.folderToolStripMenuItem_MouseEnter);
+            // 
+            // settingSToolStripMenuItem1
+            // 
+            this.settingSToolStripMenuItem1.Name = "settingSToolStripMenuItem1";
+            this.settingSToolStripMenuItem1.Size = new System.Drawing.Size(143, 22);
+            this.settingSToolStripMenuItem1.Text = "Setting(&S)";
+            this.settingSToolStripMenuItem1.Click += new System.EventHandler(this.settingSToolStripMenuItem1_Click);
+            // 
+            // statusfolderToolStripMenuItem
+            // 
+            this.statusfolderToolStripMenuItem.Name = "statusfolderToolStripMenuItem";
+            this.statusfolderToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.statusfolderToolStripMenuItem.Text = "statusfolder";
             // 
             // closeCToolStripMenuItem
             // 
@@ -168,6 +197,7 @@
             this.gbImages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbImages.Controls.Add(this.btnDownload);
             this.gbImages.Controls.Add(this.cbSendinOneNote);
             this.gbImages.Controls.Add(this.lblEvernoteTags);
             this.gbImages.Controls.Add(this.tbEvernoteTags);
@@ -177,14 +207,37 @@
             this.gbImages.Controls.Add(this.listView);
             this.gbImages.Location = new System.Drawing.Point(12, 103);
             this.gbImages.Name = "gbImages";
-            this.gbImages.Size = new System.Drawing.Size(360, 446);
+            this.gbImages.Size = new System.Drawing.Size(360, 486);
             this.gbImages.TabIndex = 4;
             this.gbImages.TabStop = false;
             // 
+            // btnDownload
+            // 
+            this.btnDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDownload.Location = new System.Drawing.Point(168, 457);
+            this.btnDownload.Name = "btnDownload";
+            this.btnDownload.Size = new System.Drawing.Size(89, 23);
+            this.btnDownload.TabIndex = 12;
+            this.btnDownload.Text = "ダウンロードする";
+            this.btnDownload.UseVisualStyleBackColor = true;
+            this.btnDownload.Click += new System.EventHandler(this.btnDownload_Click);
+            // 
+            // cbSendinOneNote
+            // 
+            this.cbSendinOneNote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cbSendinOneNote.AutoSize = true;
+            this.cbSendinOneNote.Location = new System.Drawing.Point(6, 394);
+            this.cbSendinOneNote.Name = "cbSendinOneNote";
+            this.cbSendinOneNote.Size = new System.Drawing.Size(168, 16);
+            this.cbSendinOneNote.TabIndex = 11;
+            this.cbSendinOneNote.Text = "1ノートブックにまとめて送信する";
+            this.cbSendinOneNote.UseVisualStyleBackColor = true;
+            // 
             // lblEvernoteTags
             // 
+            this.lblEvernoteTags.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblEvernoteTags.AutoSize = true;
-            this.lblEvernoteTags.Location = new System.Drawing.Point(6, 343);
+            this.lblEvernoteTags.Location = new System.Drawing.Point(6, 354);
             this.lblEvernoteTags.Name = "lblEvernoteTags";
             this.lblEvernoteTags.Size = new System.Drawing.Size(230, 12);
             this.lblEvernoteTags.TabIndex = 10;
@@ -192,23 +245,26 @@
             // 
             // tbEvernoteTags
             // 
-            this.tbEvernoteTags.Location = new System.Drawing.Point(8, 358);
+            this.tbEvernoteTags.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbEvernoteTags.Location = new System.Drawing.Point(8, 369);
             this.tbEvernoteTags.Name = "tbEvernoteTags";
             this.tbEvernoteTags.Size = new System.Drawing.Size(346, 19);
             this.tbEvernoteTags.TabIndex = 9;
             // 
             // pbSendingEvernote
             // 
-            this.pbSendingEvernote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pbSendingEvernote.Location = new System.Drawing.Point(8, 417);
+            this.pbSendingEvernote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbSendingEvernote.Location = new System.Drawing.Point(8, 428);
             this.pbSendingEvernote.Name = "pbSendingEvernote";
-            this.pbSendingEvernote.Size = new System.Drawing.Size(249, 23);
+            this.pbSendingEvernote.Size = new System.Drawing.Size(346, 23);
             this.pbSendingEvernote.TabIndex = 8;
             // 
             // btnEvernote
             // 
             this.btnEvernote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEvernote.Location = new System.Drawing.Point(263, 417);
+            this.btnEvernote.Location = new System.Drawing.Point(263, 457);
             this.btnEvernote.Name = "btnEvernote";
             this.btnEvernote.Size = new System.Drawing.Size(91, 23);
             this.btnEvernote.TabIndex = 7;
@@ -220,7 +276,7 @@
             // 
             this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(6, 402);
+            this.lblStatus.Location = new System.Drawing.Point(6, 413);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(38, 12);
             this.lblStatus.TabIndex = 6;
@@ -234,7 +290,7 @@
             this.listView.CheckBoxes = true;
             this.listView.Location = new System.Drawing.Point(8, 18);
             this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(346, 322);
+            this.listView.Size = new System.Drawing.Size(346, 333);
             this.listView.TabIndex = 1;
             this.listView.UseCompatibleStateImageBehavior = false;
             // 
@@ -251,21 +307,18 @@
             this.bgSendToEvernote.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgSendToEvernote_ProgressChanged);
             this.bgSendToEvernote.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgSendToEvernote_RunWorkerCompleted);
             // 
-            // cbSendinOneNote
+            // bgDownload
             // 
-            this.cbSendinOneNote.AutoSize = true;
-            this.cbSendinOneNote.Location = new System.Drawing.Point(8, 383);
-            this.cbSendinOneNote.Name = "cbSendinOneNote";
-            this.cbSendinOneNote.Size = new System.Drawing.Size(168, 16);
-            this.cbSendinOneNote.TabIndex = 11;
-            this.cbSendinOneNote.Text = "1ノートブックにまとめて送信する";
-            this.cbSendinOneNote.UseVisualStyleBackColor = true;
+            this.bgDownload.WorkerReportsProgress = true;
+            this.bgDownload.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgDownload_DoWork);
+            this.bgDownload.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgDownload_ProgressChanged);
+            this.bgDownload.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgDownload_RunWorkerCompleted);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 561);
+            this.ClientSize = new System.Drawing.Size(384, 601);
             this.Controls.Add(this.gbImages);
             this.Controls.Add(this.gbTop);
             this.Controls.Add(this.menuStrip);
@@ -308,6 +361,11 @@
         private System.Windows.Forms.Label lblEvernoteTags;
         private System.Windows.Forms.TextBox tbEvernoteTags;
         private System.Windows.Forms.CheckBox cbSendinOneNote;
+        private System.Windows.Forms.ToolStripMenuItem folderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingSToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem statusfolderToolStripMenuItem;
+        private System.Windows.Forms.Button btnDownload;
+        private System.ComponentModel.BackgroundWorker bgDownload;
     }
 }
 

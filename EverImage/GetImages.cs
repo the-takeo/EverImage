@@ -27,6 +27,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.IO;
+using System.Net;
+using System.Threading;
+using System.Text;
 
 namespace EverImage
 {
@@ -77,7 +80,6 @@ namespace EverImage
 
     /// <summary>
     /// Webから画像情報を取得するクラス
-    /// https://github.com/the-takeo/DownloadPictures から流用
     /// </summary>
     public class GetImages
     {
@@ -156,6 +158,39 @@ namespace EverImage
             }
 
             return pictureAdresses;
+        }
+
+        /// <summary>
+        /// 渡されたアドレスリストを元に画像のダウンロードを開始する
+        /// </summary>
+        /// <param name="pictureAdresses">ダウンロード対象画像アドレス</param>
+        /// <param name="folder">ダウンロード先ディレクトリ</param>
+        public void StartDownload(string pictureAdresse, string folder)
+        {
+            if (folder.EndsWith(@"\") == false)
+                folder = folder + @"\";
+
+            WebClient wc = new WebClient();
+
+            string downloadingfileName = pictureAdresse;
+
+            //禁則文字の置換
+            foreach (var InvalidPathChar in Path.GetInvalidPathChars())
+            {
+                if (pictureAdresse.Contains(InvalidPathChar.ToString()))
+                    downloadingfileName = downloadingfileName.Replace(InvalidPathChar, '_');
+            }
+
+            downloadingfileName = Path.GetFileName(downloadingfileName);
+
+            //禁則文字の置換
+            foreach (var InvalidPathString in invalidPathStrings)
+            {
+                if (pictureAdresse.Contains(InvalidPathString))
+                    downloadingfileName = downloadingfileName.Replace(InvalidPathString, "_");
+            }
+
+            wc.DownloadFile(new Uri(pictureAdresse), folder + downloadingfileName);
         }
     }
 }

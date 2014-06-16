@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CompletedDownloading" xml:space="preserve">
+    <value>ダウンロードが完了しました。</value>
+  </data>
   <data name="CompletedGettingImages" xml:space="preserve">
     <value>画像の取得が完了しました。</value>
   </data>
   <data name="CompletedSending" xml:space="preserve">
     <value>送信が完了しました。</value>
+  </data>
+  <data name="DownloadingError" xml:space="preserve">
+    <value>{0}のダウンロードに失敗しました。</value>
   </data>
   <data name="EndGettingEvernoteInfo" xml:space="preserve">
     <value>Evernote</value>
@@ -141,8 +147,14 @@
   <data name="LogoutFromEvernote" xml:space="preserve">
     <value>Evernoteにログインしていません。</value>
   </data>
+  <data name="ProgressOfDownloading" xml:space="preserve">
+    <value>{0}画像中、{1}画像のダウンロードが完了しました。</value>
+  </data>
   <data name="ProgressOfSending" xml:space="preserve">
     <value>{0}画像中、{1}画像の送信が完了しました。</value>
+  </data>
+  <data name="SelectedNoFolder" xml:space="preserve">
+    <value>フォルダが指定されていません。</value>
   </data>
   <data name="SendingError" xml:space="preserve">
     <value>{0}の送信に失敗しました。</value>
