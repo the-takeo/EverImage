@@ -48,24 +48,44 @@ namespace EverImage
             reflesh();
         }
 
+        /// <summary>
+        /// Evernoteにログイン中か
+        /// </summary>
         private bool isAvailableEvernote
         {
-            get { return string.IsNullOrEmpty(EvernoteToken) == false; }
+            get { return string.IsNullOrEmpty(EvernoteToken) == false && imageList.Images.Count != 0; }
         }
 
+        /// <summary>
+        /// Downloadが可能か
+        /// </summary>
         private bool isAvailableDownload
         {
-            get { return string.IsNullOrEmpty(FolderDirectory) == false; }
+            get { return string.IsNullOrEmpty(FolderDirectory) == false && imageList.Images.Count != 0; }
         }
 
+        /// <summary>
+        /// Download先Folderアドレス
+        /// </summary>
         private string FolderDirectory
         {
             get { return EverImage.Properties.Settings.Default.Folder; }
         }
 
+        /// <summary>
+        /// ログイン中のEvernoteToken
+        /// </summary>
         private string EvernoteToken
         {
             get { return EverImage.Properties.Settings.Default.EvernoteToken; }
+        }
+
+        /// <summary>
+        /// Evernoteの送信先に指定しているNotebookの名前
+        /// </summary>
+        private string EvernoteNotebookName
+        {
+            get { return EverImage.Properties.Settings.Default.EvernoteBookName; }
         }
 
         /// <summary>
@@ -96,79 +116,16 @@ namespace EverImage
             cbSendinOneNote.Enabled = true;
         }
 
-        private void loginLToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// データの保持状況に基づき、各コントロールの状態を設定する
+        /// </summary>
+        private void reflesh()
         {
-            EvernoteOA oauth = new EvernoteOA(EvernoteOA.HostService.Sandbox);
-            if (oauth.doAuth(consumerKey, consumerSecret))
-            {
-                EverImage.Properties.Settings.Default.EvernoteToken = oauth.OAuthToken;
-                EverImage.Properties.Settings.Default.Save();
+            tbEvernoteTags.Enabled = isAvailableEvernote;
+            cbSendinOneNote.Enabled = isAvailableEvernote;
+            btnEvernote.Enabled = isAvailableEvernote;
 
-                reflesh();
-            }
-        }
-
-        private void closeCToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void logoutOToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            EverImage.Properties.Settings.Default.EvernoteToken = string.Empty;
-            EverImage.Properties.Settings.Default.Save();
-
-            reflesh();
-        }
-
-        private void settingSToolStripMenuItem_MouseEnter(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(EvernoteToken) == false)
-            {
-                try
-                {
-                    settingSToolStripMenuItem.Text = ResEverImage.GettingEvernoteInfo;
-
-                    statusToolStripMenuItem.Text
-                       = string.Format(ResEverImage.LoginToEvernote, Evernote.GetEvernoteUserName(EvernoteToken));
-
-                    noteBookToolStripMenuItem.DropDownItems.Clear();
-
-                    List<string> evernotebooks = new List<string>(Evernote.GetEvetnoteNotebook(EvernoteToken).Keys);
-
-                    for (int i = evernotebooks.Count - 1; i >= 0; i--)
-                    {
-                        ToolStripMenuItem noteStrip = new ToolStripMenuItem(evernotebooks[i]);
-                        noteStrip.Click += noteStrip_Click;
-                        noteBookToolStripMenuItem.DropDownItems.Add(noteStrip);
-                        noteStrip.Checked = (evernotebooks[i] == EverImage.Properties.Settings.Default.EvernoteBookName);
-                    }
-
-                    noteBookToolStripMenuItem.Enabled = true;
-                }
-                catch
-                {
-                    statusToolStripMenuItem.Text = ResEverImage.FailedGettingEvernoteUserName;
-                }
-                loginLToolStripMenuItem.Enabled = false;
-                logoutOToolStripMenuItem.Enabled = true;
-
-                settingSToolStripMenuItem.Text = ResEverImage.EndGettingEvernoteInfo;
-
-            }
-            else
-            {
-                statusToolStripMenuItem.Text = ResEverImage.LogoutFromEvernote;
-                loginLToolStripMenuItem.Enabled = true;
-                logoutOToolStripMenuItem.Enabled = false;
-                noteBookToolStripMenuItem.Enabled = false;
-            }
-        }
-
-        void noteStrip_Click(object sender, EventArgs e)
-        {
-            EverImage.Properties.Settings.Default.EvernoteBookName = sender.ToString();
-            EverImage.Properties.Settings.Default.Save();
+            btnDownload.Enabled = isAvailableDownload;
         }
 
         /// <summary>
@@ -194,6 +151,131 @@ namespace EverImage
             }
         }
 
+        /// <summary>
+        /// イメージのサムネイルを作成する
+        /// </summary>
+        /// <param name="image">イメージ</param>
+        /// <param name="width">幅</param>
+        /// <param name="height">高さ</param>
+        /// <returns>サムネイルイメージ</returns>
+        private Image createThumbnail(Image image, int width, int height)
+        {
+            Bitmap thumbnail = new Bitmap(width, height);
+
+            Graphics graphics = Graphics.FromImage(thumbnail);
+            graphics.FillRectangle(new SolidBrush(Color.White), 0, 0, width, height);
+
+            float fw = (float)width / (float)image.Width;
+            float fh = (float)height / (float)image.Height;
+
+            float scale = Math.Min(fw, fh);
+            fw = image.Width * scale;
+            fh = image.Height * scale;
+
+            graphics.DrawImage(image, (width - fw) / 2, (height - fh) / 2, fw, fh);
+            graphics.Dispose();
+
+            return thumbnail;
+        }
+
+        private void closeCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void loginLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EvernoteOA oauth = new EvernoteOA(EvernoteOA.HostService.Sandbox);
+            if (oauth.doAuth(consumerKey, consumerSecret))
+            {
+                EverImage.Properties.Settings.Default.EvernoteToken = oauth.OAuthToken;
+                EverImage.Properties.Settings.Default.Save();
+
+                reflesh();
+            }
+        }
+
+        private void logoutOToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EverImage.Properties.Settings.Default.EvernoteToken = string.Empty;
+            EverImage.Properties.Settings.Default.Save();
+
+            reflesh();
+        }
+
+        private void settingSToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            if (isAvailableEvernote)
+            {
+                try
+                {
+                    settingSToolStripMenuItem.Text = ResEverImage.GettingEvernoteInfo;
+
+                    statusToolStripMenuItem.Text
+                       = string.Format(ResEverImage.LoginToEvernote, Evernote.GetEvernoteUserName(EvernoteToken));
+
+                    noteBookToolStripMenuItem.DropDownItems.Clear();
+
+                    List<string> evernotebooks = new List<string>(Evernote.GetEvetnoteNotebook(EvernoteToken).Keys);
+
+                    for (int i = evernotebooks.Count - 1; i >= 0; i--)
+                    {
+                        ToolStripMenuItem noteStrip = new ToolStripMenuItem(evernotebooks[i]);
+                        noteStrip.Click += noteStrip_Click;
+                        noteBookToolStripMenuItem.DropDownItems.Add(noteStrip);
+                        noteStrip.Checked = (evernotebooks[i] == EvernoteNotebookName);
+                    }
+
+                    noteBookToolStripMenuItem.Enabled = true;
+                }
+                catch
+                {
+                    statusToolStripMenuItem.Text = ResEverImage.FailedGettingEvernoteUserName;
+                }
+                loginLToolStripMenuItem.Enabled = false;
+                logoutOToolStripMenuItem.Enabled = true;
+
+                settingSToolStripMenuItem.Text = ResEverImage.EndGettingEvernoteInfo;
+            }
+            else
+            {
+                statusToolStripMenuItem.Text = ResEverImage.LogoutFromEvernote;
+                loginLToolStripMenuItem.Enabled = true;
+                logoutOToolStripMenuItem.Enabled = false;
+                noteBookToolStripMenuItem.Enabled = false;
+            }
+        }
+
+        void noteStrip_Click(object sender, EventArgs e)
+        {
+            EverImage.Properties.Settings.Default.EvernoteBookName = sender.ToString();
+            EverImage.Properties.Settings.Default.Save();
+        }
+
+
+        private void settingSToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.Description = "Select Folder";
+            fbd.RootFolder = Environment.SpecialFolder.Desktop;
+
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                EverImage.Properties.Settings.Default.Folder = fbd.SelectedPath;
+                EverImage.Properties.Settings.Default.Save();
+            }
+
+            reflesh();
+        }
+
+        private void folderToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(FolderDirectory))
+                statusfolderToolStripMenuItem.Text = ResEverImage.SelectedNoFolder;
+            else
+                statusfolderToolStripMenuItem.Text = FolderDirectory;
+        }
+        
         private void btnGetImages_Click(object sender, EventArgs e)
         {
             beginProgress();
@@ -215,6 +297,8 @@ namespace EverImage
             lblStatus.Text = ResEverImage.CompletedGettingImages;
             endProgress();
         }
+
+        #region SendEvernote
 
         private void btnEvernote_Click(object sender, EventArgs e)
         {
@@ -252,7 +336,7 @@ namespace EverImage
                 try
                 {
                     Evernote.SendToEvernote(sendImages, EvernoteToken,
-                        EverImage.Properties.Settings.Default.EvernoteBookName, evernoteTags);
+                        EvernoteNotebookName, evernoteTags);
                 }
                 catch (Exception ex)
                 {
@@ -270,7 +354,7 @@ namespace EverImage
                     try
                     {
                         Evernote.SendToEvernote(new List<Image>() { Images[index] }, EvernoteToken,
-                            EverImage.Properties.Settings.Default.EvernoteBookName, evernoteTags);
+                            EvernoteNotebookName, evernoteTags);
                     }
                     catch
                     {
@@ -320,65 +404,9 @@ namespace EverImage
             endProgress();
         }
 
-        /// <summary>
-        /// イメージのサムネイルを作成する
-        /// </summary>
-        /// <param name="image">イメージ</param>
-        /// <param name="width">幅</param>
-        /// <param name="height">高さ</param>
-        /// <returns>サムネイルイメージ</returns>
-        private Image createThumbnail(Image image, int width, int height)
-        {
-            Bitmap thumbnail = new Bitmap(width, height);
+        #endregion
 
-            Graphics graphics = Graphics.FromImage(thumbnail);
-            graphics.FillRectangle(new SolidBrush(Color.White), 0, 0, width, height);
-
-            float fw = (float)width / (float)image.Width;
-            float fh = (float)height / (float)image.Height;
-
-            float scale = Math.Min(fw, fh);
-            fw = image.Width * scale;
-            fh = image.Height * scale;
-
-            graphics.DrawImage(image, (width - fw) / 2, (height - fh) / 2, fw, fh);
-            graphics.Dispose();
-
-            return thumbnail;
-        }
-
-        private void settingSToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.Description = "Select Folder";
-            fbd.RootFolder = Environment.SpecialFolder.Desktop;
-
-            if (fbd.ShowDialog() == DialogResult.OK)
-            {
-                EverImage.Properties.Settings.Default.Folder = fbd.SelectedPath;
-                EverImage.Properties.Settings.Default.Save();
-            }
-
-            reflesh();
-        }
-
-        private void folderToolStripMenuItem_MouseEnter(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(FolderDirectory))
-                statusfolderToolStripMenuItem.Text = ResEverImage.SelectedNoFolder;
-            else
-                statusfolderToolStripMenuItem.Text = FolderDirectory;
-        }
-
-        //データの保持状況に基づき、各コントロールの状態を設定する
-        private void reflesh()
-        {
-            tbEvernoteTags.Enabled = isAvailableEvernote;
-            cbSendinOneNote.Enabled = isAvailableEvernote;
-            btnEvernote.Enabled = isAvailableEvernote;
-
-            btnDownload.Enabled = isAvailableDownload;
-        }
+        #region Download
 
         private void btnDownload_Click(object sender, EventArgs e)
         {
@@ -448,5 +476,7 @@ namespace EverImage
             pbSendingEvernote.Enabled = false;
             endProgress();
         }
+
+        #endregion
     }
 }
