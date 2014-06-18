@@ -203,6 +203,11 @@ namespace EverImage
             reflesh();
         }
 
+        /// <summary>
+        /// セッティングメニュー展開前に実行。
+        /// Evernoteのユーザー名とノート情報を通信して取得する。
+        /// 毎回通信しているので、やや時間がかかる。
+        /// </summary>
         private void settingSToolStripMenuItem_MouseEnter(object sender, EventArgs e)
         {
             if (isAvailableEvernote)
@@ -256,7 +261,7 @@ namespace EverImage
         private void settingSToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.Description = "Select Folder";
+            fbd.Description = ResEverImage.SelectFolderTitle;
             fbd.RootFolder = Environment.SpecialFolder.Desktop;
 
             if (fbd.ShowDialog() == DialogResult.OK)
@@ -478,5 +483,11 @@ namespace EverImage
         }
 
         #endregion
+
+        private void versionInfomationVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox ab = new AboutBox();
+            ab.ShowDialog();
+        }
     }
 }

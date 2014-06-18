@@ -57,6 +57,8 @@
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.bgSendToEvernote = new System.ComponentModel.BackgroundWorker();
             this.bgDownload = new System.ComponentModel.BackgroundWorker();
+            this.infoIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.versionInfomationVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.gbTop.SuspendLayout();
             this.gbImages.SuspendLayout();
@@ -65,7 +67,8 @@
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileFToolStripMenuItem});
+            this.fileFToolStripMenuItem,
+            this.infoIToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(384, 24);
@@ -90,7 +93,7 @@
             this.logoutOToolStripMenuItem,
             this.noteBookToolStripMenuItem});
             this.settingSToolStripMenuItem.Name = "settingSToolStripMenuItem";
-            this.settingSToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.settingSToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.settingSToolStripMenuItem.Text = "Evernote(&S)";
             this.settingSToolStripMenuItem.MouseEnter += new System.EventHandler(this.settingSToolStripMenuItem_MouseEnter);
             // 
@@ -126,7 +129,7 @@
             this.settingSToolStripMenuItem1,
             this.statusfolderToolStripMenuItem});
             this.folderToolStripMenuItem.Name = "folderToolStripMenuItem";
-            this.folderToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.folderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.folderToolStripMenuItem.Text = "Folder(&F)";
             this.folderToolStripMenuItem.MouseEnter += new System.EventHandler(this.folderToolStripMenuItem_MouseEnter);
             // 
@@ -146,7 +149,7 @@
             // closeCToolStripMenuItem
             // 
             this.closeCToolStripMenuItem.Name = "closeCToolStripMenuItem";
-            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.closeCToolStripMenuItem.Text = "Close(&C)";
             this.closeCToolStripMenuItem.Click += new System.EventHandler(this.closeCToolStripMenuItem_Click);
             // 
@@ -314,6 +317,21 @@
             this.bgDownload.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgDownload_ProgressChanged);
             this.bgDownload.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgDownload_RunWorkerCompleted);
             // 
+            // infoIToolStripMenuItem
+            // 
+            this.infoIToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.versionInfomationVToolStripMenuItem});
+            this.infoIToolStripMenuItem.Name = "infoIToolStripMenuItem";
+            this.infoIToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.infoIToolStripMenuItem.Text = "Info(&I)";
+            // 
+            // versionInfomationVToolStripMenuItem
+            // 
+            this.versionInfomationVToolStripMenuItem.Name = "versionInfomationVToolStripMenuItem";
+            this.versionInfomationVToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.versionInfomationVToolStripMenuItem.Text = "Version Infomation(&V)";
+            this.versionInfomationVToolStripMenuItem.Click += new System.EventHandler(this.versionInfomationVToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -366,6 +384,8 @@
         private System.Windows.Forms.ToolStripMenuItem statusfolderToolStripMenuItem;
         private System.Windows.Forms.Button btnDownload;
         private System.ComponentModel.BackgroundWorker bgDownload;
+        private System.Windows.Forms.ToolStripMenuItem infoIToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem versionInfomationVToolStripMenuItem;
     }
 }
 

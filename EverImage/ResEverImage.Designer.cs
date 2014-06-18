@@ -178,6 +178,15 @@ namespace EverImage {
         }
         
         /// <summary>
+        ///   Select Folder に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectFolderTitle {
+            get {
+                return ResourceManager.GetString("SelectFolderTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   {0}の送信に失敗しました。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SendingError {

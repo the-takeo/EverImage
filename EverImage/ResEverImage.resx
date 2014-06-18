@@ -156,6 +156,9 @@
   <data name="SelectedNoFolder" xml:space="preserve">
     <value>フォルダが指定されていません。</value>
   </data>
+  <data name="SelectFolderTitle" xml:space="preserve">
+    <value>Select Folder</value>
+  </data>
   <data name="SendingError" xml:space="preserve">
     <value>{0}の送信に失敗しました。</value>
   </data>
