@@ -75,7 +75,7 @@ namespace EverImage
         /// <param name="sendImage">送信する画像</param>
         /// <param name="EvernoteToken">Evernoteトークン</param>
         static public void SendToEvernote(List<Image> sendImages, string EvernoteToken,
-            string evernoteNotebookName,List<string> evernoteTags)
+            string evernoteNotebookName, List<string> evernoteTags, string sourceUrl)
         {
             string authToken = EvernoteToken;
 
@@ -103,6 +103,10 @@ namespace EverImage
 
             note.TagNames = evernoteTags;
 
+            NoteAttributes attributes = new NoteAttributes();
+            attributes.SourceURL = sourceUrl;
+            note.Attributes = attributes;
+
             StringBuilder content = new StringBuilder();
             content.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             content.Append("<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">");
@@ -125,7 +129,7 @@ namespace EverImage
                 resource.Mime = "image/png";
                 resource.Data = data;
 
-                
+
                 note.Resources.Add(resource);
 
                 string hashHex = BitConverter.ToString(hash).Replace("-", "").ToLower();

@@ -13,7 +13,7 @@ namespace EverImage
     public partial class FormMain : Form
     {
         GetImages gi = new GetImages();
-        List<string> Adresses;
+        List<string> Adresses = new List<string>();
         List<Image> Images = new List<Image>();
         Dictionary<int, string> SendImagesIndex = new Dictionary<int, string>();
 
@@ -53,7 +53,15 @@ namespace EverImage
         /// </summary>
         private bool isAvailableEvernote
         {
-            get { return string.IsNullOrEmpty(EvernoteToken) == false && imageList.Images.Count != 0; }
+            get { return string.IsNullOrEmpty(EvernoteToken) == false; }
+        }
+
+        /// <summary>
+        /// Evernoteに送信可能か
+        /// </summary>
+        private bool isAvailableSendingEvernote
+        {
+            get { return isAvailableEvernote && imageList.Images.Count != 0; }
         }
 
         /// <summary>
@@ -123,7 +131,7 @@ namespace EverImage
         {
             tbEvernoteTags.Enabled = isAvailableEvernote;
             cbSendinOneNote.Enabled = isAvailableEvernote;
-            btnEvernote.Enabled = isAvailableEvernote;
+            btnEvernote.Enabled = isAvailableSendingEvernote;
 
             btnDownload.Enabled = isAvailableDownload;
         }
@@ -292,6 +300,7 @@ namespace EverImage
             listView.Clear();
             imageList.Images.Clear();
             Images.Clear();
+            Adresses.Clear();
 
             Adresses = gi.GetPictures(tbUrl.Text);
 
@@ -341,7 +350,7 @@ namespace EverImage
                 try
                 {
                     Evernote.SendToEvernote(sendImages, EvernoteToken,
-                        EvernoteNotebookName, evernoteTags);
+                        EvernoteNotebookName, evernoteTags, tbUrl.Text);
                 }
                 catch (Exception ex)
                 {
@@ -354,12 +363,14 @@ namespace EverImage
 
             else
             {
+                string sourceUrl = string.Empty;
+
                 foreach (int index in SendImagesIndex.Keys)
                 {
                     try
                     {
                         Evernote.SendToEvernote(new List<Image>() { Images[index] }, EvernoteToken,
-                            EvernoteNotebookName, evernoteTags);
+                            EvernoteNotebookName, evernoteTags, Adresses[index]);
                     }
                     catch
                     {
