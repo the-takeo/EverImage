@@ -59,6 +59,8 @@
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.bgSendToEvernote = new System.ComponentModel.BackgroundWorker();
             this.bgDownload = new System.ComponentModel.BackgroundWorker();
+            this.lblfilter = new System.Windows.Forms.Label();
+            this.tbFilter = new System.Windows.Forms.TextBox();
             this.menuStrip.SuspendLayout();
             this.gbTop.SuspendLayout();
             this.gbImages.SuspendLayout();
@@ -93,34 +95,34 @@
             this.logoutOToolStripMenuItem,
             this.noteBookToolStripMenuItem});
             this.settingSToolStripMenuItem.Name = "settingSToolStripMenuItem";
-            this.settingSToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingSToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.settingSToolStripMenuItem.Text = "Evernote(&S)";
             this.settingSToolStripMenuItem.MouseEnter += new System.EventHandler(this.settingSToolStripMenuItem_MouseEnter);
             // 
             // loginLToolStripMenuItem
             // 
             this.loginLToolStripMenuItem.Name = "loginLToolStripMenuItem";
-            this.loginLToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loginLToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.loginLToolStripMenuItem.Text = "Login(&L)";
             this.loginLToolStripMenuItem.Click += new System.EventHandler(this.loginLToolStripMenuItem_Click);
             // 
             // statusToolStripMenuItem
             // 
             this.statusToolStripMenuItem.Name = "statusToolStripMenuItem";
-            this.statusToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.statusToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.statusToolStripMenuItem.Text = "Status";
             // 
             // logoutOToolStripMenuItem
             // 
             this.logoutOToolStripMenuItem.Name = "logoutOToolStripMenuItem";
-            this.logoutOToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.logoutOToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.logoutOToolStripMenuItem.Text = "Logout(&O)";
             this.logoutOToolStripMenuItem.Click += new System.EventHandler(this.logoutOToolStripMenuItem_Click);
             // 
             // noteBookToolStripMenuItem
             // 
             this.noteBookToolStripMenuItem.Name = "noteBookToolStripMenuItem";
-            this.noteBookToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.noteBookToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.noteBookToolStripMenuItem.Text = "NoteBook";
             // 
             // folderToolStripMenuItem
@@ -129,7 +131,7 @@
             this.settingSToolStripMenuItem1,
             this.statusfolderToolStripMenuItem});
             this.folderToolStripMenuItem.Name = "folderToolStripMenuItem";
-            this.folderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.folderToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.folderToolStripMenuItem.Text = "Folder(&F)";
             this.folderToolStripMenuItem.MouseEnter += new System.EventHandler(this.folderToolStripMenuItem_MouseEnter);
             // 
@@ -149,7 +151,7 @@
             // closeCToolStripMenuItem
             // 
             this.closeCToolStripMenuItem.Name = "closeCToolStripMenuItem";
-            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.closeCToolStripMenuItem.Text = "Close(&C)";
             this.closeCToolStripMenuItem.Click += new System.EventHandler(this.closeCToolStripMenuItem_Click);
             // 
@@ -164,7 +166,7 @@
             // versionInfomationVToolStripMenuItem
             // 
             this.versionInfomationVToolStripMenuItem.Name = "versionInfomationVToolStripMenuItem";
-            this.versionInfomationVToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.versionInfomationVToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.versionInfomationVToolStripMenuItem.Text = "Version(&V)";
             this.versionInfomationVToolStripMenuItem.Click += new System.EventHandler(this.versionInfomationVToolStripMenuItem_Click);
             // 
@@ -181,6 +183,8 @@
             // 
             this.gbTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbTop.Controls.Add(this.lblfilter);
+            this.gbTop.Controls.Add(this.tbFilter);
             this.gbTop.Controls.Add(this.btnGetImages);
             this.gbTop.Controls.Add(this.tbUrl);
             this.gbTop.Controls.Add(this.lblUrl);
@@ -205,9 +209,9 @@
             // 
             this.tbUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbUrl.Location = new System.Drawing.Point(39, 12);
+            this.tbUrl.Location = new System.Drawing.Point(44, 12);
             this.tbUrl.Name = "tbUrl";
-            this.tbUrl.Size = new System.Drawing.Size(315, 19);
+            this.tbUrl.Size = new System.Drawing.Size(310, 19);
             this.tbUrl.TabIndex = 2;
             // 
             // gbImages
@@ -332,6 +336,22 @@
             this.bgDownload.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgDownload_ProgressChanged);
             this.bgDownload.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgDownload_RunWorkerCompleted);
             // 
+            // lblfilter
+            // 
+            this.lblfilter.AutoSize = true;
+            this.lblfilter.Location = new System.Drawing.Point(6, 42);
+            this.lblfilter.Name = "lblfilter";
+            this.lblfilter.Size = new System.Drawing.Size(32, 12);
+            this.lblfilter.TabIndex = 5;
+            this.lblfilter.Text = "Filter";
+            // 
+            // tbFilter
+            // 
+            this.tbFilter.Location = new System.Drawing.Point(44, 39);
+            this.tbFilter.Name = "tbFilter";
+            this.tbFilter.Size = new System.Drawing.Size(148, 19);
+            this.tbFilter.TabIndex = 6;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -386,6 +406,8 @@
         private System.ComponentModel.BackgroundWorker bgDownload;
         private System.Windows.Forms.ToolStripMenuItem infoIToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem versionInfomationVToolStripMenuItem;
+        private System.Windows.Forms.Label lblfilter;
+        private System.Windows.Forms.TextBox tbFilter;
     }
 }
 

@@ -38,6 +38,7 @@ namespace EverImage
             statusfolderToolStripMenuItem.Enabled = false;
 
             tbUrl.Text = EverImage.Properties.Settings.Default.CurrentUrl;
+            tbFilter.Text = EverImage.Properties.Settings.Default.Folder;
             tbEvernoteTags.Text = EverImage.Properties.Settings.Default.EvernoteTags;
             cbSendinOneNote.Checked = EverImage.Properties.Settings.Default.SendOneNote;
 
@@ -105,6 +106,7 @@ namespace EverImage
             btnEvernote.Enabled = false;
             btnDownload.Enabled = false;
             tbUrl.Enabled = false;
+            tbFilter.Enabled = false;
             tbEvernoteTags.Enabled = false;
             listView.Enabled = false;
             cbSendinOneNote.Enabled = false;
@@ -119,6 +121,7 @@ namespace EverImage
             btnEvernote.Enabled = true;
             btnDownload.Enabled = true;
             tbUrl.Enabled = true;
+            tbFilter.Enabled = true;
             tbEvernoteTags.Enabled = true;
             listView.Enabled = true;
             cbSendinOneNote.Enabled = true;
@@ -298,7 +301,7 @@ namespace EverImage
             else
                 statusfolderToolStripMenuItem.Text = FolderDirectory;
         }
-        
+
         private void btnGetImages_Click(object sender, EventArgs e)
         {
             beginProgress();
@@ -312,7 +315,17 @@ namespace EverImage
             Images.Clear();
             Adresses.Clear();
 
-            Adresses = gi.GetPictures(tbUrl.Text);
+            EverImage.Properties.Settings.Default.Filter = tbFilter.Text;
+            EverImage.Properties.Settings.Default.Save();
+
+            List<string> filter = new List<string>(tbFilter.Text.Split(','));
+
+            if (filter.Contains(string.Empty))
+                gi = new GetImages();
+            else
+                gi = new GetImages(filter);
+
+            Adresses = gi.DoGetImages(tbUrl.Text);
 
             fillImagesToList();
 
