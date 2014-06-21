@@ -41,6 +41,8 @@
             this.settingSToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusfolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.infoIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.versionInfomationVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblUrl = new System.Windows.Forms.Label();
             this.gbTop = new System.Windows.Forms.GroupBox();
             this.btnGetImages = new System.Windows.Forms.Button();
@@ -57,8 +59,6 @@
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.bgSendToEvernote = new System.ComponentModel.BackgroundWorker();
             this.bgDownload = new System.ComponentModel.BackgroundWorker();
-            this.infoIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.versionInfomationVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.gbTop.SuspendLayout();
             this.gbImages.SuspendLayout();
@@ -100,27 +100,27 @@
             // loginLToolStripMenuItem
             // 
             this.loginLToolStripMenuItem.Name = "loginLToolStripMenuItem";
-            this.loginLToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.loginLToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loginLToolStripMenuItem.Text = "Login(&L)";
             this.loginLToolStripMenuItem.Click += new System.EventHandler(this.loginLToolStripMenuItem_Click);
             // 
             // statusToolStripMenuItem
             // 
             this.statusToolStripMenuItem.Name = "statusToolStripMenuItem";
-            this.statusToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.statusToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.statusToolStripMenuItem.Text = "Status";
             // 
             // logoutOToolStripMenuItem
             // 
             this.logoutOToolStripMenuItem.Name = "logoutOToolStripMenuItem";
-            this.logoutOToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.logoutOToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.logoutOToolStripMenuItem.Text = "Logout(&O)";
             this.logoutOToolStripMenuItem.Click += new System.EventHandler(this.logoutOToolStripMenuItem_Click);
             // 
             // noteBookToolStripMenuItem
             // 
             this.noteBookToolStripMenuItem.Name = "noteBookToolStripMenuItem";
-            this.noteBookToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.noteBookToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.noteBookToolStripMenuItem.Text = "NoteBook";
             // 
             // folderToolStripMenuItem
@@ -152,6 +152,21 @@
             this.closeCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.closeCToolStripMenuItem.Text = "Close(&C)";
             this.closeCToolStripMenuItem.Click += new System.EventHandler(this.closeCToolStripMenuItem_Click);
+            // 
+            // infoIToolStripMenuItem
+            // 
+            this.infoIToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.versionInfomationVToolStripMenuItem});
+            this.infoIToolStripMenuItem.Name = "infoIToolStripMenuItem";
+            this.infoIToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.infoIToolStripMenuItem.Text = "Info(&I)";
+            // 
+            // versionInfomationVToolStripMenuItem
+            // 
+            this.versionInfomationVToolStripMenuItem.Name = "versionInfomationVToolStripMenuItem";
+            this.versionInfomationVToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.versionInfomationVToolStripMenuItem.Text = "Version(&V)";
+            this.versionInfomationVToolStripMenuItem.Click += new System.EventHandler(this.versionInfomationVToolStripMenuItem_Click);
             // 
             // lblUrl
             // 
@@ -316,21 +331,6 @@
             this.bgDownload.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgDownload_DoWork);
             this.bgDownload.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgDownload_ProgressChanged);
             this.bgDownload.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgDownload_RunWorkerCompleted);
-            // 
-            // infoIToolStripMenuItem
-            // 
-            this.infoIToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.versionInfomationVToolStripMenuItem});
-            this.infoIToolStripMenuItem.Name = "infoIToolStripMenuItem";
-            this.infoIToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-            this.infoIToolStripMenuItem.Text = "Info(&I)";
-            // 
-            // versionInfomationVToolStripMenuItem
-            // 
-            this.versionInfomationVToolStripMenuItem.Name = "versionInfomationVToolStripMenuItem";
-            this.versionInfomationVToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.versionInfomationVToolStripMenuItem.Text = "Version Infomation(&V)";
-            this.versionInfomationVToolStripMenuItem.Click += new System.EventHandler(this.versionInfomationVToolStripMenuItem_Click);
             // 
             // FormMain
             // 

@@ -199,6 +199,27 @@ namespace EverImage
                 EverImage.Properties.Settings.Default.EvernoteToken = oauth.OAuthToken;
                 EverImage.Properties.Settings.Default.Save();
 
+                StringBuilder sb = new StringBuilder();
+                List<string> evernotebooks = new List<string>(Evernote.GetEvetnoteNotebook(EvernoteToken).Keys);
+
+                for (int i = evernotebooks.Count - 1; i >= 0; i--)
+                {
+                    sb.Append(evernotebooks[i]);
+                    sb.Append(",");
+                }
+                sb.Remove(sb.Length - 1, 1);
+
+                EverImage.Properties.Settings.Default.EvernoteBookNames = sb.ToString();
+
+                EverImage.Properties.Settings.Default.EvernoteUserName = Evernote.GetEvernoteUserName(EvernoteToken);
+
+                EverImage.Properties.Settings.Default.Save();
+
+                loginLToolStripMenuItem.Enabled = false;
+                logoutOToolStripMenuItem.Enabled = true;
+
+                settingSToolStripMenuItem.Text = ResEverImage.EndGettingEvernoteInfo;
+
                 reflesh();
             }
         }
@@ -213,42 +234,31 @@ namespace EverImage
 
         /// <summary>
         /// セッティングメニュー展開前に実行。
-        /// Evernoteのユーザー名とノート情報を通信して取得する。
-        /// 毎回通信しているので、やや時間がかかる。
+        /// Evernoteのユーザー名とノート情報をメニュー上に設定する。
         /// </summary>
         private void settingSToolStripMenuItem_MouseEnter(object sender, EventArgs e)
         {
             if (isAvailableEvernote)
             {
-                try
+                statusToolStripMenuItem.Text
+                   = string.Format(ResEverImage.LoginToEvernote, EverImage.Properties.Settings.Default.EvernoteUserName);
+
+                noteBookToolStripMenuItem.DropDownItems.Clear();
+
+                List<string> evernotebooks = new List<string>
+                    (EverImage.Properties.Settings.Default.EvernoteBookNames.Split(','));
+
+                foreach (var evernotebook in evernotebooks)
                 {
-                    settingSToolStripMenuItem.Text = ResEverImage.GettingEvernoteInfo;
-
-                    statusToolStripMenuItem.Text
-                       = string.Format(ResEverImage.LoginToEvernote, Evernote.GetEvernoteUserName(EvernoteToken));
-
-                    noteBookToolStripMenuItem.DropDownItems.Clear();
-
-                    List<string> evernotebooks = new List<string>(Evernote.GetEvetnoteNotebook(EvernoteToken).Keys);
-
-                    for (int i = evernotebooks.Count - 1; i >= 0; i--)
-                    {
-                        ToolStripMenuItem noteStrip = new ToolStripMenuItem(evernotebooks[i]);
-                        noteStrip.Click += noteStrip_Click;
-                        noteBookToolStripMenuItem.DropDownItems.Add(noteStrip);
-                        noteStrip.Checked = (evernotebooks[i] == EvernoteNotebookName);
-                    }
-
-                    noteBookToolStripMenuItem.Enabled = true;
+                    ToolStripMenuItem noteStrip = new ToolStripMenuItem(evernotebook);
+                    noteStrip.Click += noteStrip_Click;
+                    noteBookToolStripMenuItem.DropDownItems.Add(noteStrip);
+                    noteStrip.Checked = (evernotebook == EvernoteNotebookName);
                 }
-                catch
-                {
-                    statusToolStripMenuItem.Text = ResEverImage.FailedGettingEvernoteUserName;
-                }
+
+                noteBookToolStripMenuItem.Enabled = true;
                 loginLToolStripMenuItem.Enabled = false;
                 logoutOToolStripMenuItem.Enabled = true;
-
-                settingSToolStripMenuItem.Text = ResEverImage.EndGettingEvernoteInfo;
             }
             else
             {

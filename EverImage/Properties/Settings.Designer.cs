@@ -94,5 +94,29 @@ namespace EverImage.Properties {
                 this["Folder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string EvernoteBookNames {
+            get {
+                return ((string)(this["EvernoteBookNames"]));
+            }
+            set {
+                this["EvernoteBookNames"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string EvernoteUserName {
+            get {
+                return ((string)(this["EvernoteUserName"]));
+            }
+            set {
+                this["EvernoteUserName"] = value;
+            }
+        }
     }
 }
