@@ -84,7 +84,7 @@ namespace EverImage
     public class GetImages
     {
         string[] invalidPathStrings = new string[9] { @"\", @"/", @"?", @":", @"|", @"*", @"<", @">", @"""" };
-        List<string> picExtensions = new List<string>() { ".jpg", ".jpeg", ".gif", ".png", ".bmp" };
+        List<string> imgExtensions = new List<string>() { ".jpg", ".jpeg", ".gif", ".png", ".bmp" };
         List<string> filter_ = new List<string>();
 
         public GetImages(List<string> filter = null)
@@ -98,22 +98,21 @@ namespace EverImage
         /// リストにして返す。
         /// </summary>
         /// <param name="url">Webページのアドレス</param>
-        public List<string> GetPictures(string url)
+        public List<string> DoGetImages(string url)
         {
-            List<string> pictureAdresses = new List<string>();
+            List<string> imageAdresses = new List<string>();
 
             UnDisplayedBrowser udb = new UnDisplayedBrowser();
             udb.NavigateAndWait(url);
 
             HtmlDocument doc = udb.Document;
 
-
             //Webページに表示されている画像の取得
-            foreach (HtmlElement picElement in doc.GetElementsByTagName("IMG"))
+            foreach (HtmlElement imgElement in doc.GetElementsByTagName("IMG"))
             {
-                string picUrl = picElement.GetAttribute("src");
+                string imgUrl = imgElement.GetAttribute("src");
 
-                if (picExtensions.Contains(Path.GetExtension(picUrl)) == false)
+                if (imgExtensions.Contains(Path.GetExtension(imgUrl)) == false)
                     continue;
 
                 //フィルター式が設定されている場合、除外する
@@ -123,7 +122,7 @@ namespace EverImage
 
                     foreach (var item in filter_)
                     {
-                        if (picUrl.Contains(item))
+                        if (imgUrl.Contains(item))
                         {
                             isFiltered = true;
                             break;
@@ -134,50 +133,50 @@ namespace EverImage
                         continue;
                 }
 
-                if (pictureAdresses.Contains(picUrl) == false)
+                if (imageAdresses.Contains(imgUrl) == false)
                 {
-                    pictureAdresses.Add(picUrl);
+                    imageAdresses.Add(imgUrl);
                 }
             }
 
             //サムネイル画像をリンク先画像に差し替え
             foreach (HtmlElement linkElement in doc.GetElementsByTagName("A"))
             {
-                string picUrl = linkElement.GetAttribute("href");
-                if (picExtensions.Contains(Path.GetExtension(picUrl)) == false)
+                string imgUrl = linkElement.GetAttribute("href");
+                if (imgExtensions.Contains(Path.GetExtension(imgUrl)) == false)
                     continue;
 
-                foreach (HtmlElement picElement in linkElement.GetElementsByTagName("IMG"))
+                foreach (HtmlElement imgElement in linkElement.GetElementsByTagName("IMG"))
                 {
-                    if (pictureAdresses.Contains(picElement.GetAttribute("src")))
+                    if (imageAdresses.Contains(imgElement.GetAttribute("src")))
                     {
-                        pictureAdresses.Remove(picElement.GetAttribute("src"));
-                        pictureAdresses.Add(picUrl);
+                        imageAdresses.Remove(imgElement.GetAttribute("src"));
+                        imageAdresses.Add(imgUrl);
                     }
                 }
             }
 
-            return pictureAdresses;
+            return imageAdresses;
         }
 
         /// <summary>
         /// 渡されたアドレスリストを元に画像のダウンロードを開始する
         /// </summary>
-        /// <param name="pictureAdresses">ダウンロード対象画像アドレス</param>
+        /// <param name="imageAdresses">ダウンロード対象画像アドレス</param>
         /// <param name="folder">ダウンロード先ディレクトリ</param>
-        public void StartDownload(string pictureAdresse, string folder)
+        public void StartDownload(string imageAdresse, string folder)
         {
             if (folder.EndsWith(@"\") == false)
                 folder = folder + @"\";
 
             WebClient wc = new WebClient();
 
-            string downloadingfileName = pictureAdresse;
+            string downloadingfileName = imageAdresse;
 
             //禁則文字の置換
             foreach (var InvalidPathChar in Path.GetInvalidPathChars())
             {
-                if (pictureAdresse.Contains(InvalidPathChar.ToString()))
+                if (imageAdresse.Contains(InvalidPathChar.ToString()))
                     downloadingfileName = downloadingfileName.Replace(InvalidPathChar, '_');
             }
 
@@ -186,11 +185,11 @@ namespace EverImage
             //禁則文字の置換
             foreach (var InvalidPathString in invalidPathStrings)
             {
-                if (pictureAdresse.Contains(InvalidPathString))
+                if (imageAdresse.Contains(InvalidPathString))
                     downloadingfileName = downloadingfileName.Replace(InvalidPathString, "_");
             }
 
-            wc.DownloadFile(new Uri(pictureAdresse), folder + downloadingfileName);
+            wc.DownloadFile(new Uri(imageAdresse), folder + downloadingfileName);
         }
     }
 }
