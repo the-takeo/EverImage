@@ -38,7 +38,7 @@ namespace EverImage
             statusfolderToolStripMenuItem.Enabled = false;
 
             tbUrl.Text = EverImage.Properties.Settings.Default.CurrentUrl;
-            tbFilter.Text = EverImage.Properties.Settings.Default.Folder;
+            tbFilter.Text = EverImage.Properties.Settings.Default.Filter;
             tbEvernoteTags.Text = EverImage.Properties.Settings.Default.EvernoteTags;
             cbSendinOneNote.Checked = EverImage.Properties.Settings.Default.SendOneNote;
 
