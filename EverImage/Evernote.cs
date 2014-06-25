@@ -16,7 +16,7 @@ namespace EverImage
     /// </summary>
     class Evernote
     {
-        static String evernoteHost = "sandbox.evernote.com";
+        static String evernoteHost = "www.evernote.com";
 
         /// <summary>
         /// Evernoteのユーザー名を取得する
@@ -26,7 +26,6 @@ namespace EverImage
         static public string GetEvernoteUserName(string EvernoteToken)
         {
             string authToken = EvernoteToken;
-            String evernoteHost = "sandbox.evernote.com";
 
             Uri userStoreUrl = new Uri("https://" + evernoteHost + "/edam/user");
             TTransport userStoreTransport = new THttpClient(userStoreUrl);

@@ -145,11 +145,20 @@ namespace EverImage
         private void fillImagesToList()
         {
             WebClient wc = new WebClient();
-            Stream stream;
+            Stream stream = null;
 
             for (int i = 0; i < Adresses.Count; i++)
             {
-                stream = wc.OpenRead(Adresses[i]);
+                try
+                {
+                    stream = wc.OpenRead(Adresses[i]);
+                }
+                catch
+                {
+                    Adresses.RemoveAt(i);
+                    continue;
+                }
+                
                 Image image = Image.FromStream(stream);
                 Images.Add(image);
 
@@ -196,7 +205,7 @@ namespace EverImage
 
         private void loginLToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EvernoteOA oauth = new EvernoteOA(EvernoteOA.HostService.Sandbox);
+            EvernoteOA oauth = new EvernoteOA(EvernoteOA.HostService.Production);
             if (oauth.doAuth(consumerKey, consumerSecret))
             {
                 EverImage.Properties.Settings.Default.EvernoteToken = oauth.OAuthToken;
