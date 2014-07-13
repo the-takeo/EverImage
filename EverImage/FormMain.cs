@@ -147,27 +147,42 @@ namespace EverImage
             WebClient wc = new WebClient();
             Stream stream = null;
 
+            List<int> removeIndexes = new List<int>();
+
             for (int i = 0; i < Adresses.Count; i++)
             {
+                Image image = null;
+
                 try
                 {
                     stream = wc.OpenRead(Adresses[i]);
+
+                    image = Image.FromStream(stream);
+                    Images.Add(image);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    Adresses.RemoveAt(i);
+                    removeIndexes.Add(i);
                     continue;
                 }
-                
-                Image image = Image.FromStream(stream);
+
                 Images.Add(image);
 
                 Image thumbnail = createThumbnail(image, listWidth, listHeight);
 
                 imageList.Images.Add(thumbnail);
                 listView.Items.Add(Path.GetFileName(Adresses[i]), i);
-                listView.Items[i].Checked = true;
                 stream.Close();
+            }
+
+            for (int i = 0; i < listView.Items.Count; i++)
+            {
+                listView.Items[i].Checked = true;
+            }
+
+            for (int i = removeIndexes.Count - 1; i >= 0; i--)
+            {
+                Adresses.RemoveAt(removeIndexes[i]);
             }
         }
 
