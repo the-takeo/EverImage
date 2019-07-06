@@ -2,15 +2,10 @@
 =========
 ### About this
 
-指定したWebページ上の画像を取得し、ローカルにダウンロードするか、Evernoteに送信します。 
+Get pictures from web page and download or send to Evernote.
    
-ログイン機能については、下記を使わせて頂いています。   
+Login reference.
 https://github.com/matchy2/EvernoteOAuth
-
-### Function
-
-・Webページ上の画像をEvernoteに送信   
-・Webページ上の画像をローカルにダウンロード   
 
 ### Image
 
